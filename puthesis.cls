@@ -30,10 +30,10 @@
   % only if we have the hyperref command that is necessary
   \ifdefined\pdfbookmark
      \phantomsection
-     \pdfbookmark[1]{\contentsname}{Contents}
+     \pdfbookmark[1]{\contentsname}{Cuprins}
   \else
   \fi
-
+  \renewcommand{\contentsname}{Cuprins}
   \tableofcontents
   \clearpage
 }
@@ -59,8 +59,8 @@
 \clearpage\mainmatter
 }
 \def\@submitted{\@submittedmonth~\@submittedyear}
-\def\@dept{Mathematics}
-\def\@deptpref{Department of}
+\def\@dept{Telecomunicații}
+\def\@deptpref{Departamentul de}
 \def\departmentprefix#1{\gdef\@deptpref{#1}}
 \def\department#1{\gdef\@dept{#1}}
 \long\def\acknowledgements#1{\gdef\@acknowledgements{#1}}
@@ -76,39 +76,40 @@
   \hspace{0.1in}
   \vspace*{0in}
   \begin{center}
-	\large \bf  \uppercase{``Politehnica'' University of Bucharest}
+	\large \bf  \uppercase{Universitatea ``Politehnica'' din BUCUREȘTI}
   \end{center}
   \begin{center}
-		\large \bf \uppercase{ETTI-B Doctoral School}
+		\large \bf \uppercase{ȘCOALA DOCTORALĂ ETTI-B}
   \end{center}
   \begin{center}
-    \bf Decision No. \@decision
+    \bf Nr. Decizie \@decision
   \end{center}  
   \vfill
   \begin{center}
-    \huge \bf \uppercase{\@title}
+    \huge \bf \uppercase{TEZĂ DE DOCTORAT}
   \end{center}
   \begin{center}
-    \LARGE \uppercase{\@titleRo}
+	\LARGE \uppercase{\@titleRo}
   \end{center}
   \begin{center}
-    \large \rm by \bf \@author
+    \LARGE \uppercase{\@title}
   \end{center}
+  \begin{flushleft}
+    \large \rm Doctorand: \bf \@author
+  \end{flushleft}
+  \begin{flushleft}
+	\large \rm Conducător de doctorat: \bf {Prof. Dr. Ing. Simona HALUNGA}
+  \end{flushleft}
   \vspace*{6pt}
-  \begin{center}
-     A dissertation submitted in partial fulfillment\\ of the requirements for the degree of \\
-	 Doctor of Philosophy \\
-	 in Electronics and Telecomunications
-  \end{center}
 
   \vfill
   
   \vfill
   \begin{center}
-    \uppercase{\bf Dissertation Committee}
+    \uppercase{\bf Comisia de doctorat}
   \end{center}
 	\rm
-	\begin{tabular}[c]{|p{.2\textwidth}|>{\bfseries}p{.3\textwidth}|p{.1\textwidth}|>{\bfseries}p{.3\textwidth}|}
+	\begin{tabular}[c]{|m{.15\textwidth}|>{\bfseries}m{.35\textwidth}|m{.075\textwidth}|>{\bfseries}m{.35\textwidth}|}
 		\@adviser
 	\end{tabular}
    \vfill
