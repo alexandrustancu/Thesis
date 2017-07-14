@@ -101,6 +101,16 @@
 \makeglossaries
 \renewcommand{\glsnamefont}[1]{\textbf{#1}\hspace{0.5cm}-\hspace{0.25cm}}
 
+\usepackage{fancyhdr}
+\fancypagestyle{mypagestyle}{%
+	\fancyhf{}% Clear header/footer
+	\fancyhead[OC]{\fontsize{10}{12} \selectfont \leftmark}% Author on Odd page, Centred
+	\fancyhead[EC]{\fontsize{10}{12} \selectfont Contribuții la dezvoltarea și implementarea rețelelor definite prin programe soft}% Title on Even page, Centred
+	\fancyfoot[C]{\thepage}%
+	%\renewcommand{\headrulewidth}{.4pt}% Header rule of .4pt
+	\renewcommand{\headrulewidth}{0pt}
+}
+
 %set parameters for longtable:
 % default caption width is 4in for longtable, but wider for normal tables
 \setlength{\LTcapwidth}{\textwidth}

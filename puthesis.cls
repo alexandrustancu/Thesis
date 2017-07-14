@@ -23,7 +23,8 @@
   }
 \newcommand*{\mainmatter}{\pagenumbering{arabic}\makeatletter
 	\let\ps@plain\ps@empty
-	\makeatother}
+	\makeatother
+	\pagestyle{mypagestyle}}
 \newcommand*{\makelot}{}
 \newcommand*{\makelof}{}
 \newcommand*{\makelos}{}
