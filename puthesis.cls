@@ -21,7 +21,9 @@
 \newcommand*{\frontmatter}{
   \pagenumbering{roman}
   }
-\newcommand*{\mainmatter}{\pagenumbering{arabic}}
+\newcommand*{\mainmatter}{\pagenumbering{arabic}\makeatletter
+	\let\ps@plain\ps@empty
+	\makeatother}
 \newcommand*{\makelot}{}
 \newcommand*{\makelof}{}
 \newcommand*{\makelos}{}
@@ -54,8 +56,8 @@
 \newcommand*{\makefrontmatter}{
 \bodyspacing
 \frontmatter\maketitlepage\makecopyrightpage\makeabstract
-\makeacknowledgements\makededication\maketoc
-\makelot\clearpage\makelof\clearpage\makelos
+\cleardoublepage\makeacknowledgements\makededication\maketoc
+\makelot\clearpage\makelof\clearpage\makelos\clearpage\makeabbreviations
 %\clearpage
 %\glsaddall
 %\printglossary[type=\acronymtype,title=Lista abrevierilor]
@@ -67,6 +69,7 @@
 \def\departmentprefix#1{\gdef\@deptpref{#1}}
 \def\department#1{\gdef\@dept{#1}}
 \long\def\acknowledgements#1{\gdef\@acknowledgements{#1}}
+\long\def\abbreviations#1{\gdef\@abbreviations{#1}}
 \def\dedication#1{\gdef\@dedication{#1}}
 \newcommand{\maketitlepage}{{
   \thispagestyle{empty}
@@ -165,6 +168,11 @@
     \clearpage
   \fi
   }
+\def\makeabbreviations{
+	\addcontentsline{toc}{section}{Lista abrevierilor}
+	\printglossary[type=\acronymtype, title={Lista abrevierilor}]
+	\clearpage
+}
 \DeclareOption{lot}{\renewcommand*{\makelot}{
   \ifdefined\phantomsection
     % makes hyperref recognize this section properly for pdf links

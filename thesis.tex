@@ -7,7 +7,7 @@
 
 %%% For print copies
 %% set 'singlespace' option to set entire thesis to single space, and define "\printmode" to remove all hyperlinks for printed copies of the thesis. Delete all output files before changing this mode -- it will turn hyperref package on and off
-\documentclass[12pt,lot, lof, singlespace]{puthesis}
+\documentclass[12pt,lot, lof, singlespace, twoside, openright]{puthesis}
 \newcommand{\printmode}{}
 
 %%% For the electronic copy, use doublespacing, define "\proquestmode" to use outlined links, instead of colored links. 
@@ -67,6 +67,7 @@
     \renewcommand{\dblfloatpagefraction}{0.66}	% require fuller float pages
     
     \renewcommand*{\chaptername}{Capitolul}
+    \renewcommand\bibname{Bibliografie}
 
 % The documentclass already sets parameters to make a high penalty for widows and orphans. 
 
@@ -92,8 +93,13 @@
 %   see: http://en.wikibooks.org/wiki/LaTeX/Tables
 \usepackage{booktabs}
 
-%\usepackage[acronym,nomain,nonumberlist]{glossaries}
-%\makeglossaries
+\usepackage{emptypage}
+\usepackage{lipsum}
+
+
+\usepackage[acronym,nomain,nonumberlist]{glossaries}
+\makeglossaries
+\renewcommand{\glsnamefont}[1]{\textbf{#1}\hspace{0.5cm}-\hspace{0.25cm}}
 
 %set parameters for longtable:
 % default caption width is 4in for longtable, but wider for normal tables
@@ -203,6 +209,9 @@
 \input{acknowledgements}
 }
 
+\abbreviations{
+\input{abrevieri}
+}
 %\dedication{To my parents.}
 
 
@@ -260,7 +269,7 @@
   \phantomsection  % makes hyperref recognize this section properly for pdf link
 \else
 \fi
-\addcontentsline{toc}{chapter}{Bibliography}
+\addcontentsline{toc}{chapter}{Bibliografie}
 
 % include your .bib file
 \bibliography{thesis}
