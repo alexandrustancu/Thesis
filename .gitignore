@@ -50,3 +50,17 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+*.log
+*.gz
+*.aux
+*.lof
+*.los
+*.lot
+*.prj
+*.toc
+*.acn
+*.bbl
+*.blg
+*.ist
+*.gz(busy)

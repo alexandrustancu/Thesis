@@ -56,6 +56,9 @@
 \frontmatter\maketitlepage\makecopyrightpage\makeabstract
 \makeacknowledgements\makededication\maketoc
 \makelot\clearpage\makelof\clearpage\makelos
+%\clearpage
+%\glsaddall
+%\printglossary[type=\acronymtype,title=Lista abrevierilor]
 \clearpage\mainmatter
 }
 \def\@submitted{\@submittedmonth~\@submittedyear}
@@ -109,7 +112,7 @@
     \uppercase{\bf Comisia de doctorat}
   \end{center}
 	\rm
-	\begin{tabular}[c]{|m{.15\textwidth}|>{\bfseries}m{.35\textwidth}|m{.075\textwidth}|>{\bfseries}m{.35\textwidth}|}
+	\begin{tabular}[c]{|m{.15\textwidth}|>{\bfseries}m{.35\textwidth}|m{.075\textwidth}|>{\bfseries}m{.3\textwidth}|}
 		\@adviser
 	\end{tabular}
    \vfill
@@ -144,9 +147,9 @@
     \else
     \fi
 
-    \addcontentsline{toc}{section}{Acknowledgements}
+    \addcontentsline{toc}{section}{Mulțumiri}
     \begin{center}
-      \Large \textbf{Acknowledgements}
+      \Large \textbf{Mulțumiri}
     \end{center}
     \@acknowledgements
     \clearpage
@@ -168,14 +171,18 @@
     \phantomsection
   \else
   \fi
-  \addcontentsline{toc}{section}{List of Tables}\listoftables}}
+  \addcontentsline{toc}{section}{Lista tabelelor}
+  \renewcommand{\listtablename}{Lista tabelelor}
+  \listoftables}}
 \DeclareOption{lof}{\renewcommand*{\makelof}{
   \ifdefined\phantomsection
     % makes hyperref recognize this section properly for pdf links
     \phantomsection
   \else
   \fi
-  \addcontentsline{toc}{section}{List of Figures}\listoffigures}}
+  \addcontentsline{toc}{section}{Lista figurilor}
+  \renewcommand{\listfigurename}{Lista figurilor}
+  \listoffigures}}
 \DeclareOption{los}{
   \renewcommand*{\makelos}{
     \RequirePackage{losymbol}
