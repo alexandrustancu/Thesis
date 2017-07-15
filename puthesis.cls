@@ -70,7 +70,6 @@
 \def\departmentprefix#1{\gdef\@deptpref{#1}}
 \def\department#1{\gdef\@dept{#1}}
 \long\def\acknowledgements#1{\gdef\@acknowledgements{#1}}
-\long\def\abbreviations#1{\gdef\@abbreviations{#1}}
 \def\dedication#1{\gdef\@dedication{#1}}
 \newcommand{\maketitlepage}{{
   \thispagestyle{empty}
@@ -170,6 +169,9 @@
   \fi
   }
 \def\makeabbreviations{
+	\setacronymstyle{short-long}
+	%for making the glossary more aligned in a table-like manner
+	\setglossarystyle{super}
 	\addcontentsline{toc}{section}{Lista abrevierilor}
 	\printglossary[type=\acronymtype, title={Lista abrevierilor}]
 	\clearpage

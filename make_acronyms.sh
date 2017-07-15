@@ -1,0 +1,1 @@
+makeindex -s thesis.ist -t thesis.alg -o thesis.acr thesis.acn

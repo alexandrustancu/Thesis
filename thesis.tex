@@ -97,9 +97,13 @@
 \usepackage{lipsum}
 
 
-\usepackage[acronym,nomain,nonumberlist]{glossaries}
+\usepackage[acronym,nomain,nonumberlist,nopostdot,nogroupskip]{glossaries}
+\usepackage{glossary-mcols}
+%\usepackage{glossaries-extra}
 \makeglossaries
-\renewcommand{\glsnamefont}[1]{\textbf{#1}\hspace{0.5cm}-\hspace{0.25cm}}
+%\renewcommand{\glsnamefont}[1]{\textbf{#1}\hspace{0.5cm}-\hspace{0.25cm}}
+\input{abrevieri}
+
 
 \usepackage{fancyhdr}
 \fancypagestyle{mypagestyle}{%
@@ -219,9 +223,6 @@
 \input{acknowledgements}
 }
 
-\abbreviations{
-\input{abrevieri}
-}
 %\dedication{To my parents.}
 
 
