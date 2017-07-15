@@ -7,6 +7,8 @@
 \glossentry{iot}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{1}}}\glsgroupskip
 \glsgroupheading{N}\relax \glsresetentrylist %
+\glossentry{ncp}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{7}}}%
 \glossentry{netconf}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{2}}}\glsgroupskip
 \glsgroupheading{O}\relax \glsresetentrylist %
@@ -19,14 +21,14 @@
 		\setentrycounter[]{page}\glsnumberformat{1\delimN 2}}}\glsgroupskip
 \glsgroupheading{S}\relax \glsresetentrylist %
 \glossentry{sdn}{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{1\delimR 3}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{1\delimR 3}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{5\delimR 7}}}\glsgroupskip
 \glsgroupheading{T}\relax \glsresetentrylist %
 \glossentry{tr}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{2}}}\glsgroupskip
 \glsgroupheading{W}\relax \glsresetentrylist %
 \glossentry{wt}{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{1}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{3}}}%
+		\setentrycounter[]{page}\glsnumberformat{1\delimR 3}}}%
 \glossentry{wte}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{3}}}%
 \end{theglossary}\glossarypostamble

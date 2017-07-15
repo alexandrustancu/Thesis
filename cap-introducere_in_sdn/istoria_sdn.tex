@@ -1,1 +1,54 @@
-\section{Istoria SDN}
+\section{Evoluția SDN}
+
+\subsection{Istoria SDN}
+
+Reţelele definite prin software îşi au originile în munca și ideile din cadrul proiectului OpenFlow, început la universitatea Stanford, în jurul anului 2009. Multe dintre conceptele și ideile folosite în \gls{sdn} au evoluat însă în ultimii 25 de ani și acum îşi găsesc locul în această nouă paradigmă, care îşi propune să schimbe modul în care reţelele sunt proiectate și administrate.
+
+\gls{sdn} reprezintă o arhitectură nouă de reţea, în care starea de dirijare a planului de date este administrată de un plan de control distant, decuplat de cel de date. Reţelele definite prin software sunt definite ca fiind o arhitectură de rețea ce se bazează pe următoarele 4 concepte, conform~\cite{kreutz2015software}:
+\begin{enumerate}
+	\item Decuplarea planurilor de date și de control;
+	\item Deciziile de dirijare se bazează pe fluxuri de date, nu pe adresa destinaţie;
+	\item Logica de control se mută într-o entitate externă, un echipament de control \gls{sdn} (care are un sistem de operare de reţea);
+	\item Reţeaua este programabilă prin aplicaţii software care rulează peste sistemul de operare de reţea și care interacţionează cu echipamentele din planul de date.
+\end{enumerate}
+
+Reţelele definite prin programe software au apărut ca o nevoie, pentru a oferi posibilitatea inovaţiei  în cadrul administrării reţelelor și pentru a uşura introducerea de noi servicii. Aceste nevoi nu sunt însă noi, ele mai fiind studiate și în trecut, însă abia acum, prin \gls{sdn}, pot fi satisfăcute într-un mod viabil, care să nu implice schimbări majore în infrastructura reţelelor deja existente.
+
+Istoria \gls{sdn} poate fi împărţită în trei etape, fiecare influenţând această nouă paradigmă prin conceptele propuse, aşa cum este evidenţiat în~\cite{feamster2014road}:
+\begin{enumerate}
+	\item Reţelele active, care au introdus funcţiile programabile în reţea, sporind gradul de inovaţie (mijlocul anilor 1990 – începutul anilor 2000);
+	\item Separarea planurilor de date și de control, care a condus la dezvoltarea de interfeţe deschise între planurile de date și de control (aproximativ 2001 – 2007);
+	\item Dezvoltarea protocolului OpenFlow și a sistemelor de operare de reţea, care reprezintă prima adoptare pe scară largă a unei interfeţe deschise, făcând separarea planurilor de control și de date extensibilă și practică.
+\end{enumerate}
+
+\subsubsection{Rețelele active}
+
+Reţelele active reprezintă reţele în care comutatoarele pot efectua anumite calcule sau operaţii asupra pachetelor de date. Reţelele tradiţionale nu pot fi considerate programabile. Reţelele active au reprezentat un concept radical asupra controlului unei reţele, propunând o interfaţă de programare care să expună resurse în noduri individuale de reţea și care să susţină construirea de funcţionalităţi specifice, care să fie aplicate unui subset de pachete care tranzitează acel nod.
+
+Motivul principal pentru care reţelele active au apărut a fost cel de accelerare a inovației. La momentul respectiv, introducerea unui nou concept, serviciu sau tehnologie, într-o reţea de mari dimensiuni, cum ar fi Internet-ul, putea dura până la zece ani, de la faza de prototip până la implementare. Se dorea ca nodurile active din reţea să permită ruterelor/comutatoarelor să descarce servicii noi în infrastructura deja existentă. În acelaşi timp, aceste noduri active ar fi putut coexista fără probleme în aceeaşi reţea cu vechile dispozitive.
+Au existat două tipuri de abordări în cadrul reţelelor active, în funcţie de modelul ales pentru programarea rețelei:
+\begin{itemize}
+\item \textit{Modelul încapsulat} – unde codul care trebuia executat în cadrul nodurilor active era transportat în bandă, în pachetele de date; fiecare pachet de date conţinea cod care trebuia rulat;
+\item \textit{Modelul comutatoarelor programabile} – codul care trebuia executat în cadrul nodurilor active era stabilit prin mecanisme din afara benzii. Execuţia programelor era determinată de antetul pachetului.
+\end{itemize}
+
+Rețelele active nu au ajuns niciodată să fie implementate pe scară largă, din mai multe cauze: momentul de timp la care au apărut acestea nu a fost potrivit; la acel moment nu aveau o aplicabilitate clară, deoarece nu apăruseră încă centrele de date sau infrastructurile cloud; implementarea reţelelor active avea nevoie și de suport hardware, care nu era tocmai ieftin, ceea ce a constituit încă un dezavantaj.
+
+Chiar dacă rețelele active nu au ajuns să fie implementate pe scară largă, câteva idei au fost preluate în cadrul rețelelor definite prin programe soft:
+\begin{itemize}
+\item \textbf{Funcţii programabile în rețea, care să faciliteze inovaţia.} În motivaţia introducerii rețelelor definite prin software se acuză dificultatea inovației în rețelele de producţie. Rețelele active foloseau programarea planului de date, în timp ce în \gls{sdn} se programează atât planul de control cât și cel de date.
+\item \textbf{Virtualizarea rețelei și capacitatea de a demultiplexa programe soft pe baza antetului pachetelor.} Rețelele active au dezvoltat un cadru arhitectural care să permită funcționarea unei astfel de platforme, având drept componente de bază un sistem de operare comun (al nodurilor), un set de medii de execuţie și un set de aplicații active, care oferă de fapt un serviciu capăt-la-capăt.
+\item \textbf{Atenţia la aparatele de rețea și la felul în care funcţiile acestora sunt compuse.} În cercetarea din cadrul rețelelor active se vorbea despre nevoia unificării gamei largi de funcţii oferite de aparatele de rețea într-un cadru programabil sigur.
+\end{itemize}
+
+\subsubsection{Separarea planurilor de date și de control}
+
+Rețelele, încă de la început, au avut planurile de date și de control integrate. Acest lucru a dus la câteva dezavantaje: îngreunarea sarcinilor de administrare a rețelei, de depanare a configurării rețelei sau de controlul/prezicerea comportamentului de dirijare.
+
+Primele inițiative de separare a planurilor de control și de date datează din anii 1980. La acel moment, cei de la AT\&T propuneau renunţarea la semnalizarea în bandă și introducerea unui Punct de Control al Rețelei - \gls{ncp}, realizând astfel separarea planurilor de control și de date. Această modificare a înlesnit accelerarea inovației în rețea, prin posibilitatea de introducere rapidă de noi servicii și a furnizat noi metode de a îmbunătăţi eficienţa, printr-o vedere de ansamblu asupra rețelei oferită de punctul de control al rețelei. Există și inițiative mai recente care și-au propus separarea planurilor de control și de date, cum ar fi ETHANE, NOX, OpenFlow. Acestea au ca avantaj faptul că nu au nevoie de modificări substanţiale în echipamentele de dirijare, ceea ce înseamnă că pot fi adoptate mai ușor de către industria rețelelor.
+
+Ideile preluate în rețelele definite prin programe soft din cercetarea care propunea separarea planurilor de control și de date sunt următoarele:
+\begin{itemize}
+	\item \textbf{Control logic centralizat care folosește o interfață deschisă către planul de date.} O interfață deschisă către planul de date, care să permită inovația în programele soft din planul de control a fost propusă de activitățile de cercetare din cadrul ForCES. Însă, această interfață nu a fost adoptată de marile companii furnizoare de echipamente de rețea, astfel că aceasta nu a fost implementată pe scară largă.
+	\item \textbf{Administrarea stărilor distribuite.} Controlul logic centralizat al rețelei a atras alte provocări, cum ar fi administrarea stărilor distribuite. Un echipament de control logic centralizat trebuie reprodus pentru a face față defectării acestuia. Însă această reproducere poate duce la stări de inconsistență între copiile echipamentului de control. Aceste probleme apar și în cadrul \gls{sdn}, în contextul echipamentelor de control distribuite.
+\end{itemize}
