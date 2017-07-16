@@ -79,6 +79,8 @@
 
 %%% For figures
 \usepackage{graphicx}
+
+\DeclareGraphicsExtensions{.png, .pdf}
 %\usepackage{subfig,rotate}
 
 %%% for comments
@@ -108,7 +110,7 @@
 \usepackage{fancyhdr}
 \fancypagestyle{mypagestyle}{%
 	\fancyhf{}% Clear header/footer
-	\fancyhead[OC]{\fontsize{10}{12} \selectfont \leftmark}% Author on Odd page, Centred
+	\fancyhead[OC]{\fontsize{10}{12} \selectfont \nouppercase{\leftmark}}% Author on Odd page, Centred
 	\fancyhead[EC]{\fontsize{10}{12} \selectfont Contribuții la dezvoltarea și implementarea rețelelor definite prin programe soft}% Title on Even page, Centred
 	\fancyfoot[C]{\thepage}%
 	%\renewcommand{\headrulewidth}{.4pt}% Header rule of .4pt
