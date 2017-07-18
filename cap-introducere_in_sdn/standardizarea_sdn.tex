@@ -30,8 +30,24 @@ Un rol important în adoptarea \gls{sdn} de către operatori și în diseminarea
 
 \subsection{IETF}
 
+Un alt \gls{sdo} care prestează activităţi de standardizare în domeniul rețelelor definite prin software este \gls{ietf}. Această organizaţie, în general, oferă standardele de bază folosite în Internet. Obiectivul lor declarat este îmbunătăţirea funcţionării Internetului prin dezvoltarea de documente tehnice relevante și de înaltă calitate care să ghideze proiectarea, utilizarea și administrarea Internetului.
+
+Doar puține din grupurile de lucru din cadrul \gls{ietf} se ocupă cu activităţi care au legătură cu tehnologia \gls{sdn}. Unul dintre acestea a dezvoltat \gls{forces}, iniţiativă ce separa planurile de date și de control ale echipamentelor, cu câțiva ani înainte ca protocolul OpenFlow, mult mai cunoscut, să propună asta într-un mod care să permită o adoptare mai rapidă în industrie.
+
+Alt grup de lucru se ocupă de \textit{interfaţa către sistemul de rutare} - \gls{i2rs}. Acesta își propune să dezvolte interfețe pentru ca aplicațiile \gls{sdn} să poată accesa sistemul de rutare al rețelei. Se doreşte ca beneficiarii \gls{i2rs} să fie aplicații de administrare, echipamente de control \gls{sdn} sau aplicații de utilizator care au cereri specifice la adresa rețelei. Acestea ar permite informaţiilor, politicilor și parametrilor operaţionali să fie introduşi sau extraşi din sistemul de rutare, fără a afecta consistenţa datelor și coerenţa infrastructurii de rutare. Această abordare poate fi privită ca un rival al protocolului OpenFlow, cu mențiunea că se aplică doar de la nivelul 3 în sus, în stiva OSI.
+
+În interiorul grupului de lucru \gls{spring} se discută un control al rutării care să permită indicarea unei căi de dirijare încă de la sursa de trafic, calcularea acesteia putând fi făcută atât centralizat, cât și distribuit. Tot în cadrul \gls{ietf} se dezvoltă și protocolul \gls{netconf}, însă acesta va fi detaliat într-o secţiune viitoare.
+
+Parte din \gls{ietf} este și \gls{irtf}. Aceasta este o organizaţie paralelă, care se ocupă mai mult de partea de cercetare, nu de cea de inginerie. Aici există un grup de lucru care investighează tehnologia \gls{sdn} din mai multe perspective, cu scopul de a recunoaşte atât abordări ce pot fi definite și lansate pe termen scurt, dar și provocări viitoare: \gls{sdnrg}. Sunt de interes probleme ca extensibilitatea soluţiei, abstractizări sau limbaje de programare ce pot fi folosite în contextul \gls{sdn}. Se doreşte ca acest grup să ofere un spațiu comun tuturor cercetătorilor cu interes în acest domeniu.
+
 \subsection{ETSI}
+
+Unul dintre grupurile specificaţiilor pentru industrie din cadrul \gls{etsi} se numeşte grupul \gls{nfv}. Conceptul de virtualizare a funcţiilor de rețea este unul complementar rețelelor definite prin software. Este o iniţiativă a operatorilor de rețea și are ca scop să permită acestora să profite de noile tehnologii ce apar, să le crească abilităţile de a livra servicii, să reducă costurile și să crească viteza de lansare în producție a serviciilor noi sau experimentale.
+
+Chiar dacă accentul este pus pe virtualizarea funcţiilor de rețea, a fost foarte bine înţeles faptul că utilizarea tehnologiei \gls{sdn} reprezintă un avantaj major și că multe dintre cazurile de utilizare propuse pot fi implementate folosind această paradigmă. Astfel, grupul lucrează la standardizare și stabileşte protocoale împreună cu celelalte organizaţii care se ocupă de standardizarea \gls{sdn}.
 
 \subsection{ITU-T}
 
-\subsection{MEF}
+Unul dintre cele mai vechi organizaţii de standardizare, \gls{itu-t}, a avut o importanţă majoră în multe aspecte critice din domeniul telecomunicaţiilor. În contextul \gls{sdn}, grupul se ocupă de în principal de arhitectura și cerinţe pentru utilizarea acestei tehnologii în rețelele de transport de date. Deoarece acest tip de rețele au cerinţe importante, diferite de celelalte rețele, evidenţierea acestora de către \gls{itu-t} ajută la orientarea eforturilor de standardizare în direcţia corectă. 
+
+Zonele de interes pentru grupurile care fac parte din această organizaţie sunt: aspecte arhitecturale ale securităţii în \gls{sdn} și servicii pentru securitate prin \gls{sdn}, specificaţii pentru arhitectura planului de control în rețele de transport de date, cerinţe de semnalizare folosind tehnologia \gls{sdn} sau cerinţe funcţionale și arhitecturale pentru \gls{sdn} și rețelele viitorului.
