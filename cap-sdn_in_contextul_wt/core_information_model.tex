@@ -1,10 +1,10 @@
-\section{Modelul informaţional de bază - ONF TR-512.1}
+\section{Modelul informaţional de bază - ONF TR-512.1 (\textit{Core Model})}
 
 Modelul informațional de bază, \textit{CoreModel} reprezintă o recomandare făcută de grupul \textit{Information Modeling} din cadrul \gls{onf}. Aceasta propune un model care să descrie resursele din planul de date al unei rețele de transport, indiferent de tehnologia folosită, cu scopul de a fi folosit în activitățile de control și administrare.
 
 Un model informațional descrie lucrurile dintr-un domeniu, în ceea ce priveşte obiectele, proprietăţile lor (reprezentate prin atribute) și relaţiile dintre acestea \cite{onftr512v1.0}. Scopul dezvoltării unui astfel de model este acela de a fi folosit de către echipamentele de control \gls{sdn}, pentru administrarea automată a unor astfel de rețele de transport, în concordanţă cu arhitectura \gls{sdn}. Echipamentul de control va prezenta cu ajutorul acestui model viziunea sa asupra rețelei către clienţii acestuia (care pot fi aplicații software sau alte echipamente de control).
 
-\textit{CoreModel} propune obiecte de bază care reprezintă planul de date al unei rețele, care sunt însă independente de tehnologia folosită pentru transportul datelor. Acestea pot fi apoi folosite pentru dezvoltarea de modele informaționale specifice pentru anumite tehnologii (de exemplu tehnologii fără fir - microunde sau unde milimetrice, tehnologii optice, etc.). Modelul conține și obiecte care pot fi folosite în aplicații specifice, însă toate acestea sunt independente de protocoalele care ar putea fi folosite în planul de control. El este propus în limbajul \gls{uml} și se bazează și pe alte modele informaționale, propuse de alte organizaţii care dezvoltă standarde.
+\textit{CoreModel} propune obiecte de bază care reprezintă planul de date al unei rețele, care sunt însă independente de tehnologia folosită pentru transportul datelor. Acestea pot fi apoi folosite pentru dezvoltarea de modele informaționale specifice pentru anumite tehnologii (de exemplu tehnologii fără fir - microunde sau unde milimetrice, tehnologii optice, etc.). Modelul conţine și obiecte care pot fi folosite în aplicații specifice, însă toate acestea sunt independente de protocoalele care ar putea fi folosite în planul de control. El este propus în limbajul \gls{uml} și se bazează și pe alte modele informaționale, propuse de alte organizaţii care dezvoltă standarde.
 
 \begin{figure}[t]
 	\centering
@@ -13,16 +13,49 @@ Un model informațional descrie lucrurile dintr-un domeniu, în ceea ce priveşt
 	\label{fig:core_model}
 \end{figure}
 
-O vedere de ansamblu simplificată, folosind \gls{uml} se poate vedea în Figura \ref{fig:core_model}. Blocurile relevante pentru simulatoarele dezvoltate vor fi detaliate în paragrafele următoare.
+O vedere de ansamblu simplificată, folosind \gls{uml} se poate vedea în Figura \ref{fig:core_model}. Blocurile relevante pentru simulatoarele dezvoltate vor fi detaliate în paragrafele următoare. Nu se vor detalia toate obiectele care alcătuiesc modelul informațional de bază deoarece, așa cum este sugerat în recomandarea \gls{onf}, modelul poate fi redus și simplificat, în funcție de nevoile pentru care este folosit.  
 
-\subsection{Network Element}
+\subsection{Obiectul \textit{NetworkElement (NE)}}
+%\paragraph{Network Element}
 
-\subsection{Forwarding Domain}
+Obiectul \textit{NetworkElement} reprezintă un element de rețea - \gls{ne}, adică, în cazul \gls{sdn}, un echipament de dirijare din planul de date, sau, în cazul în care există virtualizare, un element virtual de rețea vizibil în interfaţa care folosește acea virtualizare.
 
-\subsection{Forwarding Construct}
+Pentru o interfață directă între echipamentul de control \gls{sdn} către un echipament de rețea, obiectul \textit{NetworkElement} delimitează domeniul de control pentru resursele echipamentului, cum ar fi încapsularea folosită, multiplexarea, demultiplexarea, funcțiile asociate operaţiilor de administrare și de mentenanţă, etc. De asemenea, obiectul \textit{NetworkElement} defineşte domeniul spaţiilor de adresare pentru identificarea obiectelor care reprezintă resursele conţinute de echipamentul respectiv.
 
-\subsection{FC Port}
+În cazul în care se folosesc metode de virtualizare, obiectul \textit{NetworkElement} reprezintă un element virtual de rețea. Asocierea unui element virtual cu unul real este responsabilitatea echipamentului de control \gls{sdn}. Cu ajutorul interfeţei de tip \textit{southbound} acesta poate crea sau şterge în mod dinamic astfel de obiecte pentru a oferi diferite vederi asupra rețelei, în funcție de nevoile aplicațiilor care se află deasupra echipamentului de control.
 
-\subsection{Logical Termination Point}
+\subsection{Obiectele \textit{LogicalTerminationPoint (LTP)} și \textit{LayerProtocol (LP)}}
 
-\subsection{Layer Protocol}
+Obiectul \textit{LogicalTerminationPoint} - punct logic de terminaţie - cuprinde terminaţiile, adaptările sau funcțiile asociate operaţiilor de administrare și de mentenanţă ale unuia sau mai multor niveluri de transport. Prin natura sa, acest obiect suportă toate tipurile de protocoale, inclusiv cele pentru comutare de pachete sau pentru comutare de circuite. Fiecare nivel de transport este reprezentat de o instanţă a unui obiect \textit{LayerProtocol}, instanţă care poate fi folosită pentru a controla terminaţiile sau funcțiile de administrare și mentenanţă ale nivelului respectiv, sau pentru adaptarea (încapsularea sau multiplexarea semnalului client).
+
+Dacă relația client-server între resursele echipamentului reprezentate de obiectele \textit{LTP} și \textit{LP} are un grad de asociativitate de 1:1 și este imuabilă, atunci un obiect \textit{LTP} poate conține mai multe obiecte \textit{LP}, de niveluri diferite de transport. Altfel, obiectele \textit{LP} de pe niveluri diferite trebuie să aibă asociate obiecte \textit{LTP} diferite.
+
+Scopul acestor obiecte este acela de a oferi suport din perspectiva controlului și a administrării fără a fi nevoie de a defini atribute specifice unei anumite tehnologii, permițând astfel extinderea modelului fără a depinde de proprietățile tehnologiei respective, oferind flexibilitate sporită.
+
+Un atribut important al obiectelor \textit{LP} este reprezentat de către \textit{layerProtocolName}. Acesta reprezintă nivelul de transport al obiectului și poate avea următoarele valori, conform \cite{onftr512v1.2}:
+
+\begin{itemize}
+	\item Nivel 0: \gls{ops}, \gls{ots}, \gls{oms}, \gls{och};
+	\item Nivel 1: \gls{otu}, \gls{odu};
+	\item Nivel 2: Carrier Ethernet: \gls{ety}, \gls{eth}; \gls{mpls-tp};
+	\item Proprietăţi specifice nivelului de transport asociate cu obiectul \textit{LP}.
+\end{itemize}
+
+\subsection{Obiectul \textit{Forwarding Construct}}
+
+Obiectele \textit{ForwardingConstruct (FC)} sunt folosite pentru a realiza dirijarea informației caracteristice nivelului de transport dat de obiectul \textit{LP} și oferă posibilitatea de a permite dirijarea între două sau mai multe obiecte \textit{LTP}. Astfel, obiectele \textit{FC} sunt independente de nivelul de transport folosit și suportă orice formă de pachete sau circuite.
+
+Asocierea între \textit{FC} și \textit{LTP} se face prin port-uri, în care fiecare dintre acestea are un rol în contextul obiectului \textit{FC}. Dirijarea traficului între port-urile asociate se face în funcție de tipul de obiect \textit{FC}. Un astfel de obiect poate fi asociat unui singur obiect \textit{FD}. Ele pot fi definite recursiv (un obiect \textit{FC} poate fi parte din alt obiect \textit{FC}), însă la cel mai mic nivel de recursivitate acesta reprezintă de fapt o legătură în matricea de comutatoare a elementului de rețea.
+
+Obiectele \textit{FC} pot fi folosite pentru a reprezenta orice fel de conexiune, cum ar fi punct la punct, punct la multi-punct sau multi-punct la multi-punct.
+
+\subsection{Obiectul \textit{FC Port}}
+
+Obiectele \textit{FC Port} sunt folosite, așa cum a fost prezentat anterior, la asocierea dintre obiectele \textit{FC} și \textit{LTP}. Dirijarea traficului între aceste obiecte se face conform tipului de \textit{FC}. De exemplu, \textit{FC Port} poate reprezenta un punct protejat (de încredere) sau un punct care protejează (de rezervă), în cazul în care rolul obiectului \textit{FC} este unul de protecție.
+
+\subsection{Obiectul \textit{Forwarding Domain}}
+
+\textit{ForwardingDomain} - domeniul de dirijare - este un obiect care modelează componenta topologiei care permite dirijarea pachetelor între diferite puncte ale resurselor echipamentului de rețea (reprezentate prin alte obiecte, de tipul \textit{LogicalTerminationPoint}). Lista punctelor logice de terminaţie care pot fi folosite de către un domeniu de dirijare este parte a acestui obiect. \textit{ForwardingDomain} poate conţine zero sau mai multe obiecte de tip \textit{ForwardingConstruct}, indiferent de nivelul la care se află acestea (Ethernet, MPLS, optic, etc.). 
+
+Acest domeniu de dirijare oferă contextul pentru crearea, modificarea sau ștergerea obiectelor de tip \textit{ForwardingConstruct}. Obiectul \textit{ForwardingDomain} dintr-un element de rețea poate reprezenta comutatorul sau gruparea de comutatoare din echipamentul de dirijare.
+
