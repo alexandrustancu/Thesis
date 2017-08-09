@@ -41,7 +41,7 @@ Un atribut important al obiectelor \textit{LP} este reprezentat de către \texti
 	\item Proprietăţi specifice nivelului de transport asociate cu obiectul \textit{LP}.
 \end{itemize}
 
-\subsection{Obiectul \textit{Forwarding Construct}}
+\subsection{Obiectul \textit{ForwardingConstruct (FC)}}
 
 Obiectele \textit{ForwardingConstruct (FC)} sunt folosite pentru a realiza dirijarea informației caracteristice nivelului de transport dat de obiectul \textit{LP} și oferă posibilitatea de a permite dirijarea între două sau mai multe obiecte \textit{LTP}. Astfel, obiectele \textit{FC} sunt independente de nivelul de transport folosit și suportă orice formă de pachete sau circuite.
 
@@ -53,7 +53,7 @@ Obiectele \textit{FC} pot fi folosite pentru a reprezenta orice fel de conexiune
 
 Obiectele \textit{FC Port} sunt folosite, așa cum a fost prezentat anterior, la asocierea dintre obiectele \textit{FC} și \textit{LTP}. Dirijarea traficului între aceste obiecte se face conform tipului de \textit{FC}. De exemplu, \textit{FC Port} poate reprezenta un punct protejat (de încredere) sau un punct care protejează (de rezervă), în cazul în care rolul obiectului \textit{FC} este unul de protecție.
 
-\subsection{Obiectul \textit{Forwarding Domain}}
+\subsection{Obiectul \textit{ForwardingDomain (FD)}}
 
 \textit{ForwardingDomain} - domeniul de dirijare - este un obiect care modelează componenta topologiei care permite dirijarea pachetelor între diferite puncte ale resurselor echipamentului de rețea (reprezentate prin alte obiecte, de tipul \textit{LogicalTerminationPoint}). Lista punctelor logice de terminaţie care pot fi folosite de către un domeniu de dirijare este parte a acestui obiect. \textit{ForwardingDomain} poate conţine zero sau mai multe obiecte de tip \textit{ForwardingConstruct}, indiferent de nivelul la care se află acestea (Ethernet, MPLS, optic, etc.). 
 
