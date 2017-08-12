@@ -1,3 +1,96 @@
-\section{Alegerea unui cadru pentru serverul NETCONF}
+\section{Alegerea unui cadru software pentru serverul NETCONF}
 
-Standardizare: ONF, etc..
+Există numeroase soluții care lucrează cu protocolul \gls{netconf}, atât pe partea de client, cât și pe cea de server. O listă a acestora este menţinută de către grupul de lucru \gls{netconf} și poate fi găsită online \cite{netconfwiki}. Conţine și soluții software proprietare, dar și soluții cu sursă deschisă. Pentru implementarea simulatoarelor prezentate în această lucrare au fost considerate trei opţiuni de implementare a unui server \gls{netconf}, cu sursă deschisă: \textit{Netopeer}, \textit{OpenYuma} și \textit{\gls{netconf} Test Tool} (unealtă oferită de proiectul \gls{odl}). O comparaţie între acestea va fi prezentată în continuare, justificând astfel alegerea de a folosi una dintre ele în simulatoare \cite{stancu2016comparison}.
+
+\subsection{Netopeer}
+
+\textit{Netopeer} este o soluție ce se bazează pe librăria \textit{libnetconf}, oferind atât o implementare pentru server, cât și una pentru client. Această librărie este una cu sursă deschisă, implementată în limbajul C, ce oferă o implementare a protocolului \gls{netconf} \cite{krejci2013building}. Este o soluție care poate fi personalizată, oferind numeroase posibilităţi pentru implementările de server și de client și suportă toate caracteristicile protocolului \gls{netconf}.
+
+\textit{Netopeer} oferă câteva unelte, de exemplu pentru a facilita integrarea modelelor informaționale \gls{yang} în module ale serverului, denumită \textit{netopeer-manager}, sau pentru a configura caracteristicile serverului \gls{netconf}, \textit{netopeer-configurator}. Orice model de date \gls{yang} poate fi adăugat ca un modul al serverului, însă acesta trebuie prelucrat înainte. Astfel, fişierul \textit{*.yang} este transformat de către această soluție în fişiere pe care serverul le poate recunoaşte, inclusiv un fişier \textit{*.c}, care conţine un schelet de cod C, reprezentând așa-numite funcții de apel invers (\textit{callback functions}) ce pot fi implementate pentru ca serverul să ofere comportamentul dorit, în raport cu modelul \gls{yang} folosit. Apoi, codul C este compilat, rezultând o bibliotecă partajată (\textit{shared library}) care poate fi utilizată de către codul de bază al serverului.
+
+\subsection{OpenYuma}
+
+\textit{OpenYuma} este o soluție software care se bazează pe proiectul \textit{Yuma}, care a devenit proprietar în anul 2011. Propune de asemenea implementări pentru server și client \gls{netconf}, scrise în limbajul C, oferind chiar posibilitatea de a încorpora acest cod în dispozitive al căror software folosește tot limbajul C.
+
+\textit{OpenYuma} are o filosofie asemănătoare cu \textit{Netopeer}, oferind unelte pentru transformarea modelelor \gls{yang} în cod C schelet, care să fie apoi implementat pentru ca serverul \gls{netconf} să ofere facilităţile propuse. Unealta propusă de acest cadru software se numeşte \textit{yangudmp} și transformă fişierele \textit{*.yang} în fişiere \textit{*.h} și \textit{*.c}, conţinând, la fel ca în cazul \textit{Netopeer}, funcții de apel invers ce trebuie rescrise.
+
+Codul C obţinut după transformarea modelelor \gls{yang} se compilează, rezultând tot o bibliotecă partajată care să poată fi folosită de către codul de cază al serverului. Aceasta poate fi încărcată în momentul inițializării serverului sau chiar în mod dinamic, în timp ce acesta rulează.
+
+\subsection{Netconf Test Tool}
+
+\textit{Netconf Test Tool} este un cadru software oferit în cadrul proiectului OpenDaylight. Este o soluție simplă, care nu poate fi personalizată foarte mult, oferind doar o implementare Java pentru un server \gls{netconf}. Aceasta este folosită de proiectul \gls{odl} pentru a-și testa interfața de tip \textit{southbound} care implementează protocolul \gls{netconf}.
+
+Scopul acestei soluții este puțin diferit de al celorlalte, deoarece \textit{Netconf Test Tool} nu își propune oferirea unui cadru software pentru un server \gls{netconf} care apoi să poată fi integrat cu echipamentele de rețea, ci oferirea unei soluții simple și rapide care să încarce un model \gls{yang} specific, cu scopul de a-l testa. Cu toate acestea, acest software a fost considerat pentru comparaţie, deoarece și scopul simulatoarelor este de a testa modelele \gls{yang} și de a crea topologii specifice rețelelor de transport de date fără fir, expunând modelele informaționale descrise anterior.
+
+\subsection{Comparaţie între soluţiile care oferă server NETCONF}
+
+Soluţiile descrise anterior au fost evaluate atât prin compararea documentaţiei relevante pe care acestea o pun la dispoziţie, cât și prin experimente practice care consideră diferite scenarii. Primul criteriu care poate fi considerat este limbajul pe programare în care aceste cadre software sunt implementate: \textit{Netopeer} și \textit{OpenYuma} sunt scrise în limbajul C, pe când \textit{Netconf Test Tool} este o implementare Java.
+
+Un alt criteriu pentru evaluare constă în abilitatea serverului de a încărca în mod direct (dinamic sau în momentul inițializării) modele \gls{yang}. Această posibilitate este oferită doar de implementarea Java. Celelalte două soluții au nevoie de o fază premergătoare de procesare,transformând fişierele \textit{*.yang} în \textit{*.c}. \textit{Netconf Test Tool} poate încărca modelul \gls{yang} doar în momentul inițializării serverului, dintr-un director anume, pe când celelalte cadre software pot încărca acest model, după ce a fost procesat, în mod dinamic.
+
+Un alt subiect pentru comparaţie este dat de tipurile de locuri de stocare a datelor (\textit{datastore}) propuse de protocolul \gls{netconf} suportate de implementările serverelor. \textit{Netopeer} și \textit{OpenYuma} folosesc fişiere \gls{xml} în care stochează informaţiile și suportă toate cele trei tipuri de \textit{datastore} propuse de \gls{netconf}: \textit{startup}, \textit{candidate} și \textit{runnning}. Cealaltă soluție software, \textit{Netconf Test Tool} oferă posibilitatea de a utiliza doar \textit{running datastore} stocând valorile parametrilor în variabile de execuţie, acestea pierzându-se în momentul în care serverul este oprit. O diferenţă importantă apare în acest context, între cele două soluții implementate în C, \textit{OpenYuma} oferind o flexibilitate mai mare. În cazul \textit{Netopeer}, atunci când serverul se iniţializează, încarcă valorile parametrilor din \textit{startup datastore} și \textit{running datastore} în memorie. Apoi, începe să analizeze valorile din \textit{startup datastore}, comparându-le cu valorile corespunzătoare atributelor din \textit{running datastore}. Dacă valorile nu sunt egale, sau valoarea din \textit{running datastore} nu există (însemnând prima utilizare a serverului), atunci serverul copiază valoarea din \textit{startup datastore} și apelează funcţia de apel invers asociată parametrului de configurare. Prin această abordare severul se asigură ca nu există inconsistenţe între \textit{startup datastore} și \textit{running datastore} și, mai mult, dacă acest server este conectat la un echipament real de rețea, prin apelarea funcţiei asociate parametrului, dispozitivul va fi configurat astfel încât valorile din server să reflecte valorile de pe echipament. \textit{OpenYuma} are o abordare mai flexibilă, permiţând dezvoltatorilor să altereze \textit{running datastore} în timpul inițializării modulului, fără a implica \textit{startup datastore}.
+
+O altă caracteristică importantă a serverelor care poate fi comparată este abilitatea de a genera notificări \gls{netconf}. Toate cele trei soluții oferă notificări. În cazul \textit{Netconf Test Tool} este ceva simplist, acestea fiind declanşate printr-o comandă \gls{netconf} și trimise dintr-un fişier \gls{xml} care le conţine. \textit{OpenYuma} oferă câte o funcție cu apel invers pentru fiecare notificare pe care o găseşte în momentul procesării modelului \gls{yang}. \textit{Netopeer} nu are această abilitate în mod implicit, însă suportul este oferit de \textit{libnetconf}.
+
+Din perspectiva funcţiilor cu apel invers generate în momentul procesării modelului \gls{yang} putem compara doar cele două soluții implementate în limbajul C, deoarece \textit{Netconf Test Tool} nu oferă astfel de caracteristici. Soluția \textit{Netopeer} oferă posibilitatea de a alege care dintre parametrii configurabili vor avea o funcție cu apel invers asociată, în timp ce \textit{OpenYuma} va genera o astfel de funcție pentru fiecare din parametrii configurabili pe care îi găseşte în modelul \gls{yang}. Pentru informaţiile de stare \textit{Netopeer} generează o singură funcție cu apel invers care este apelată pentru orice operaţie \gls{netconf} de tip \textit{get} care ajunge la server, iar \textit{OpenYuma} generează câte o astfel de funcție pentru fiecare parametru de stare.
+
+Din punctul de vedere al abilităţii de a configura portul pe care serverul ascultă, toate soluțiile oferă această posibilitate. \textit{Netconf Test Tool} are nevoie de un port de plecare, incrementând apoi numărul portului pentru celelalte instanţe ale serverului. Și celelalte soluții oferă posibilitatea de a schimba portul pe care serverul ascultă. Din perspectiva rulării mai multor instanţe de server pe aceeaşi mașină, atât \textit{Netconf Test Tool} cât și \textit{OpenYuma} oferă această posibilitate, diferitele instanţe folosind porturi diferite. \textit{Netopeer}, pe de altă parte, nu permite rularea mai multor instanţe pe aceeaşi mașină.
+
+Un alt criteriu pentru compararea acestor cadre software este dat de suportul pentru mai multe fire de execuție, adică abilitatea serverului de a permite conectarea mai multor clienţi în același timp. \textit{Netconf Test Tool} oferă această posibilitate. \textit{OpenYuma} oferă de asemenea acest suport, cu menţiunea că accesul concurent la resursele comune trebuie rezolvat în funcțiile cu apel invers care vor fi implementate de către dezvoltatori, nefiind rezolvat de către cadrul software. În cazul \textit{Netopeer}, acest acces concurent este rezolvat din faza de proiectare a serverului și este oferit de \textit{libnetconf}.
+
+Și capabilitățile de depanare oferite ar putea constitui un criteriu de comparaţie, însă toate soluţiile se bazează pe fişiere de tip jurnal, oferind mai multe niveluri de jurnalizare. 
+
+Comparaţia bazată pe lucrurile descrise în documentaţie este rezumată în Tabelul \ref{tab:Table_1}, în timp ce un sumar al comparaţiei bazată pe experimentare se găseşte în Tabelul \ref{tab:Table_2}.
+
+\begin{table}[tp]
+	\caption{Comparaţie a caracteristicilor oferite de cadrele software considerate.\label{tab:Table_1}}
+	
+	\begin{tabular}{|M{0.35\textwidth}|M{0.17\textwidth}|M{0.17\textwidth}|M{0.16\textwidth}|}
+			\hline 
+			\textbf{Criteriile} & \multicolumn{3}{c|}{\textbf{Soluții servere NETCONF}} \tabularnewline
+			\cline{2-4} 
+			\textbf{de comparație} & \textbf{\emph{Netopeer}} & \textbf{\emph{OpenYuma}} & \textbf{\emph{Testtool}}\tabularnewline
+			\hline 
+			Limbajul de programare & C & C & Java\tabularnewline
+			\hline 
+			Încărcarea modelelor YANG brute & Nu & Nu & Da\tabularnewline
+			\hline 
+			Încărcarea dinamică a modulelor în server & Da & Da & Nu\tabularnewline
+			\hline 
+			NETCONF \textit{datastore} & toate & toate & \textit{running} \tabularnewline
+			\hline 
+			Suport pentru notificări & da & da & da\tabularnewline
+			\hline 
+			Port configurabil & da & da & da\tabularnewline
+			\hline 
+			Mai multe instanțe de server & nu & da & da \tabularnewline
+			\hline 
+			Mai multe conexiuni în același timp & da & da & da\tabularnewline
+			\hline 
+			Capabilități pentru depanare & jurnalizare & jurnalizare & jurnalizare\tabularnewline
+			\hline
+		\end{tabular}
+\end{table}
+
+\begin{table}[tp]
+
+	\caption{Compararea practică a cadrelor software considerate\label{tab:Table_2}}
+	\begin{tabular}{|M{0.35\textwidth}|M{0.17\textwidth}|M{0.17\textwidth}|M{0.16\textwidth}|}
+		\hline
+		\textbf{Scenariul experimentat} & \textbf{\emph{Netopeer}} & \textbf{\emph{OpenYuma}} & \textbf{\emph{Testtool}} \tabularnewline
+		\hline 
+		Procesarea \textit{*.yang} în \textit{*.c} & lnctool & yangdump & N/A\tabularnewline
+		\hline 
+		Reprezentarea \textit{datastore} în cadrul serverului & fişier XML & fișier XML & variabile de execuție \tabularnewline
+		\hline 
+		Încărcarea datelor în faza de iniţializare a serverului & \textit{startup} & flexibilă, orice se poate suprascrie & N/A \tabularnewline
+		\hline 
+		Implementarea notificărilor NETCONF & \textit{libnetconf} & funcție cu apel invers oferită & fișier XML \tabularnewline
+		\hline 
+		Funcții pentru parametrii configurabili & câte una per atribut & câte una per atribut & N/A\tabularnewline
+		\hline 
+		Funcții pentru parametrii de stare & doar una, globală & câte una per atribut & N/A\tabularnewline
+		\hline 
+		Conexiuni concurente de la clienți & da & suportă, trebuie implementat & da\tabularnewline
+		\hline \end{tabular}
+\end{table}

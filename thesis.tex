@@ -68,7 +68,8 @@
     
     \renewcommand*{\chaptername}{Capitolul}
     \renewcommand\bibname{Bibliografie}
-    \renewcommand{\figurename}{Figura}
+    \renewcommand{\figurename}{Fig.}
+    \renewcommand{\tablename}{Tabelul}
 
 % The documentclass already sets parameters to make a high penalty for widows and orphans. 
 
@@ -106,6 +107,10 @@
 \makeglossaries
 %\renewcommand{\glsnamefont}[1]{\textbf{#1}\hspace{0.5cm}-\hspace{0.25cm}}
 \input{abrevieri}
+
+\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
 
 
 \usepackage{fancyhdr}

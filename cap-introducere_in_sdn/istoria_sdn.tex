@@ -4,7 +4,7 @@
 
 Reţelele definite prin software îşi au originile în activitatea și ideile din cadrul proiectului OpenFlow, început la universitatea Stanford, în jurul anului 2009. Multe dintre conceptele și ideile folosite în \gls{sdn} au evoluat însă în ultimii 25 de ani și acum îşi găsesc locul în această nouă paradigmă, care îşi propune să schimbe modul în care reţelele sunt proiectate și administrate.
 
-\gls{sdn} reprezintă o arhitectură nouă de reţea, în care starea de dirijare a planului de date este administrată de un plan de control distant, decuplat de cel de date. Reţelele definite prin software sunt definite ca fiind o arhitectură de rețea ce se bazează pe următoarele 4 concepte, conform~\cite{kreutz2015software}:
+\gls{sdn} reprezintă o arhitectură nouă de reţea, în care starea de dirijare a planului de date este administrată de un plan de control distant, decuplat de cel de date. Reţelele definite prin software reprezintă o arhitectură de rețea ce se bazează pe următoarele 4 concepte, conform~\cite{kreutz2015software}:
 \begin{enumerate}
 	\item Decuplarea planurilor de date și de control;
 	\item Deciziile de dirijare se bazează pe fluxuri de date, nu pe adresa destinaţie;
@@ -12,7 +12,7 @@ Reţelele definite prin software îşi au originile în activitatea și ideile d
 	\item Reţeaua este programabilă prin aplicaţii software care rulează peste sistemul de operare de reţea și care interacţionează cu echipamentele din planul de date.
 \end{enumerate}
 
-Reţelele definite prin programe software au apărut ca o nevoie, pentru a oferi posibilitatea inovaţiei în cadrul administrării reţelelor și pentru a uşura introducerea de noi servicii. Aceste nevoi nu sunt însă noi, ele mai fiind studiate și în trecut, însă abia acum, prin \gls{sdn}, pot fi satisfăcute într-un mod viabil, care să nu implice schimbări majore în infrastructura reţelelor deja existente.
+Reţelele definite prin programe software au apărut în scopul de a oferi posibilitatea inovaţiei în cadrul administrării reţelelor și pentru a uşura introducerea de noi servicii. Aceste nevoi nu sunt însă noi, ele mai fiind studiate și în trecut, însă abia acum, prin \gls{sdn}, pot fi satisfăcute într-un mod viabil, fără a implica schimbări majore în infrastructura reţelelor deja existente.
 
 Istoria \gls{sdn} poate fi împărţită în trei etape, fiecare influenţând această nouă paradigmă prin conceptele propuse, aşa cum este evidenţiat în~\cite{feamster2014road}:
 \begin{enumerate}
@@ -23,9 +23,10 @@ Istoria \gls{sdn} poate fi împărţită în trei etape, fiecare influenţând a
 
 \subsubsection{Rețelele active}
 
-Reţelele active reprezintă reţele în care comutatoarele pot efectua anumite calcule sau operaţii asupra pachetelor de date. Reţelele tradiţionale nu pot fi considerate programabile. Reţelele active au reprezentat un concept radical asupra controlului unei reţele, propunând o interfaţă de programare care să expună resurse în noduri individuale de reţea și care să susţină construirea de funcţionalităţi specifice, care să fie aplicate unui subset de pachete care tranzitează acel nod.
+Reţelele active reprezintă reţele în care comutatoarele pot efectua anumite calcule sau operaţii asupra pachetelor de date. Reţelele tradiţionale nu pot fi considerate programabile. Reţelele active au reprezentat o schimbare de concept radicală asupra controlului unei reţele, propunând o interfaţă de programare care să expună resurse în noduri individuale de reţea și să susţină construirea de funcţionalităţi specifice, care să fie aplicate unui subset de pachete care tranzitează acel nod.
 
-Motivul principal pentru care reţelele active au apărut a fost cel de accelerare a inovației. La momentul respectiv, introducerea unui nou concept, serviciu sau tehnologie, într-o reţea de mari dimensiuni, cum ar fi Internet-ul, putea dura până la zece ani, de la faza de prototip până la implementare. Se dorea ca nodurile active din reţea să permită ruterelor/comutatoarelor să descarce servicii noi în infrastructura deja existentă. În acelaşi timp, aceste noduri active ar fi putut coexista fără probleme în aceeaşi reţea cu vechile dispozitive.
+Motivul principal pentru care reţelele active au apărut a fost cel de accelerare a inovației. La momentul respectiv, introducerea unui nou concept, serviciu sau tehnologie, într-o reţea de mari dimensiuni, cum ar fi Internet-ul, putea dura până la zece ani, de la faza de prototip până la implementare. Se dorea ca nodurile active din reţea să permită ruterelor/comutatoarelor să descarce și să implementeze servicii noi în infrastructura deja existentă. În acelaşi timp, aceste noduri active ar fi putut coexista fără probleme în aceeaşi reţea cu vechile dispozitive.
+
 Au existat două tipuri de abordări în cadrul reţelelor active, în funcţie de modelul ales pentru programarea rețelei:
 \begin{itemize}
 \item \textit{Modelul încapsulat} – unde codul care trebuia executat în cadrul nodurilor active era transportat în bandă, în pachetele de date; fiecare pachet de date conţinea cod care trebuia rulat;
@@ -45,7 +46,7 @@ Chiar dacă rețelele active nu au ajuns să fie implementate pe scară largă, 
 
 Rețelele, încă de la început, au avut planurile de date și de control integrate. Acest lucru a dus la câteva dezavantaje: îngreunarea sarcinilor de administrare a rețelei, de depanare a configurării rețelei sau de controlul/prezicerea comportamentului de dirijare.
 
-Primele inițiative de separare a planurilor de control și de date datează din anii 1980. La acel moment, cei de la AT\&T propuneau renunţarea la semnalizarea în bandă și introducerea unui Punct de Control al Rețelei - \gls{ncp}, realizând astfel separarea planurilor de control și de date. Această modificare a înlesnit accelerarea inovației în rețea, prin posibilitatea de introducere rapidă de noi servicii și a furnizat noi metode de a îmbunătăţi eficienţa, printr-o vedere de ansamblu asupra rețelei oferită de punctul de control al rețelei. Există și inițiative mai recente care și-au propus separarea planurilor de control și de date, cum ar fi ETHANE~\cite{casado2007ethane}, NOX~\cite{gude2008nox}, OpenFlow~\cite{mckeown2008openflow}. Acestea au ca avantaj faptul că nu au nevoie de modificări substanţiale în echipamentele de dirijare, ceea ce înseamnă că pot fi adoptate mai ușor de către industria rețelelor.
+Primele inițiative de separare a planurilor de control și de date datează din anii 1980. La acel moment, cei de la AT\&T propuneau renunţarea la semnalizarea în bandă și introducerea unui Punct de Control al Rețelei - \gls{ncp}, realizând astfel separarea planurilor de control și de date. Această modificare a înlesnit accelerarea inovației în rețea, prin posibilitatea de introducere rapidă de noi servicii și a furnizat noi metode de a îmbunătăţi eficienţa, prin introducerea unei vederi de ansamblu asupra rețelei oferită de punctul de control al rețelei. Există și inițiative mai recente care și-au propus separarea planurilor de control și de date, cum ar fi ETHANE~\cite{casado2007ethane}, NOX~\cite{gude2008nox}, OpenFlow~\cite{mckeown2008openflow}. Acestea au ca avantaj faptul că nu au nevoie de modificări substanţiale în echipamentele de dirijare, ceea ce înseamnă că pot fi adoptate mai ușor de către industria rețelelor.
 
 Ideile preluate în rețelele definite prin programe software din cercetarea care propunea separarea planurilor de control și de date sunt următoarele:
 \begin{itemize}
@@ -55,9 +56,9 @@ Ideile preluate în rețelele definite prin programe software din cercetarea car
 
 \subsubsection{Protocolul OpenFlow și sistemele de operare de rețea}
 
-Înainte de apariţia protocolului OpenFlow, ideile care stau la baza rețelelor definite prin programe software aveau parte de o contradicţie între viziunea unor rețele complet programabile și pragmatismul care ar fi permis lansarea în rețele reale. Protocolul OpenFlow a găsit un echilibru între aceste două obiective, prin posibilitatea de implementare pe comutatoarele deja existente în rețele (suport hardware deja existent) și prin implementarea mai multor funcții decât predecesorii săi. Chiar dacă, bazându-se pe suportul hardware deja existent, și-a asumat anumite limitări, protocolul OpenFlow a fost astfel imediat pregătit pentru lansare în rețelele de producție.
+Înainte de apariţia protocolului OpenFlow, ideile care stăteau la baza rețelelor definite prin programe software aveau parte de o contradicţie între viziunea unor rețele complet programabile și pragmatismul care ar fi permis lansarea în rețele reale. Protocolul OpenFlow a găsit un echilibru între aceste două obiective, prin posibilitatea de implementare la nivelul comutatoarelor deja existente în rețele (suport hardware deja existent) și prin implementarea mai multor funcții decât predecesorii săi. Chiar dacă, bazându-se pe suportul hardware deja existent, și-a asumat anumite limitări, protocolul OpenFlow a fost astfel imediat pregătit pentru lansare în rețelele de producție.
 
-Inițial, s-a dorit ca protocolul OpenFlow să fie implementat pe rețelele din campusuri studențești, pentru a putea fi conduse experimente pe arhitectura de rețea, într-un mediu care să permită cercetarea.
+Inițial, s-a dorit ca protocolul OpenFlow să fie implementat în rețelele din campusuri studențești, pentru a putea fi conduse experimente în arhitectura de rețea, într-un mediu care să permită cercetarea.
 
 După ce protocolul OpenFlow a avut succes în aceste rețele din campusuri, a început să ia amploare în alte domenii, cum ar fi centrele de date. S-a dovedit a fi mai eficient din punct de vedere al costurilor angajarea de ingineri care să dezvolte aplicații software sofisticate, de control al rețelei, decât cumpărarea de echipamente care să suporte aceleași facilități în mod proprietar.
 
