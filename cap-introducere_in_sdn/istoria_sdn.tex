@@ -98,19 +98,19 @@ Rețelele definite prin programe soft se dovedesc a fi foarte potrivite și în 
 
 Rețelele definite prin software reprezintă o nouă paradigmă în arhitecturile de rețea și au la bază patru idei principale: (i) decuplarea planurilor de date și de control, (ii) deciziile de dirijare sunt luate pe baza fluxurilor de date, în loc de adresa destinație, (iii) planul de control se mută într-o entitate logică externă, numită echipament de control \gls{sdn}, care rulează un sistem de operare de rețea și (iv) rețeaua este programabilă prin aplicații software care rulează în sistemul de operare de rețea și interacţionează cu echipamentele de dirijare.
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=1\textwidth]{arhitectura_sdn}
-	\caption{Arhitectura SDN și abstractizările fundamentale~\cite{kreutz2015software}}
-	\label{fig:arhitectura_sdn}
-\end{figure}
-
 Astfel, rețelele definite prin software pot fi definite cu ajutorul a trei abstractizări, conform ~\cite{kreutz2015software}, cum se poate observa în Figura \ref{fig:arhitectura_sdn}:
 \begin{itemize}
 	\item Abstractizarea dirijării;
 	\item Abstractizarea distribuţiei;
 	\item Abstractizarea specificărilor.	 
 \end{itemize}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\textwidth]{arhitectura_sdn}
+	\caption{Arhitectura SDN și abstractizările fundamentale~\cite{kreutz2015software}}
+	\label{fig:arhitectura_sdn}
+\end{figure}
 
 În mod ideal, \textit{abstractizarea dirijării} reprezintă permiterea oricărui comportament de dirijare dorit de aplicațiile software din rețea (cu ajutorul planului de control),  fără a necesita cunoașterea detaliilor legate de capabilitățile hardware ale infrastructurii existente. Un exemplu pentru o astfel de abstractizare este protocolul OpenFlow.
 
@@ -134,15 +134,15 @@ Infrastructura pentru o rețea definită prin programe software este compusă, l
 
 În paradigma \gls{sdn}, elementele care alcătuiesc infrastructura rețelei nu mai iau deciziile de dirijare pe baza adresei destinație, ca în cazul rețelelor tradiționale, ci pe baza unor fluxuri de date \cite{mckeown2008openflow}. Presupunând o rețea bazată pe protocolul OpenFlow, elementele de dirijare se bazează pe o secvenţă de tabele de fluxuri, unde fiecare intrare din tabel conţine: (i) o regulă de asociere, (ii) acțiunile care trebuie executate asupra pachetelor care se potrivesc regulii și (iii) contoare care să menţină o statistică despre pachetele care s-au potrivit. Prioritatea regulilor este dată de ordinea din tabelul de fluxuri. Acțiunile posibile asupra pachetelor pot fi: dirijarea acestora către un port de ieșire, dirijarea către echipamentul de control, aruncarea pachetelor, trimiterea către secvența normală de prelucrare, trimiterea către următorul tabel de fluxuri etc. Regulile de potrivire care se pot aplica pachetelor se pot baza pe mai multe câmpuri din antetul pachetului, cum ar fi câmpuri de nivel doi (Ethernet), MPLS, de nivel 3 (IPv4/v6), câmpuri de nivel 4 (TCP/IP) etc., în aproape orice fel de combinație.
 
-\paragraph{Nivelul 2: Interfețele de tip \textit{southbound}}
+\paragraph{Nivelul 2: Interfețele de Sud (\textit{southbound})}
 
-Interfețele de tip \textit{southbound} fac legătura între echipamentele de dirijare și echipamentele de control din rețea, îndeplinind astfel una dintre funcțiile de bază ale rețelelor definite prin programe soft: separarea planurilor de date și de control.
+Interfețele de Sud fac legătura între echipamentele de dirijare și echipamentele de control din rețea, îndeplinind astfel una dintre funcțiile de bază ale rețelelor definite prin programe soft: separarea planurilor de date și de control. Terminologia Nord/Sud se raportează la controlerul \gls{sdn}.
 
 Acest tip de interfețe este foarte bine privit de către industrie. Prin standardizarea acestora se va permite construirea de rețele cu echipamente care să poată proveni de la mai multi producători, promovând astfel interoperabilitatea.
 
 Cel mai acceptat și utilizat standard pentru acest tip de interfețe este OpenFlow. Acesta propune specificaţii comune pentru implementarea canalului de comunicaţie dintre echipamentele de dirijare și cele de control. Protocolul OpenFlow furnizează trei surse de informații pentru sistemul de operare de rețea: (i) mesaje bazate pe evenimente, care sunt trimise de echipamentele de dirijare către cele de control în momentul în care apare o schimbare a legăturii de date sau a unui port; (ii) statistici despre fluxurile de date, care sunt generate în echipamentele de dirijare și trimise către echipamentele de control; (iii) mesaje care conţin și pachete de date și sunt trimise de către echipamentele de dirijare către cele de control în momentul în care nu ştiu cum să trateze un anumit tip de flux de date sau din cauza faptului că există o acțiune explicită de tipul \textit{trimite la echipamentul de control} în tabela de fluxuri. Aceste tipuri de informații sunt esențiale pentru furnizarea de detalii despre fluxurile de date sistemului de operare de rețea.
 
-Deşi este cel mai utilizat protocol, OpenFlow nu este singura interfață de tip \textit{southbound} pentru rețelele definite prin programe soft. Există și alte propuneri pentru acest tip de interfețe, dintre care amintim: \gls{netconf}, \gls{forces}, OpFlex, \gls{pof}, \gls{ovsdb}, \gls{rofl}, \gls{hal}, OpenState etc. \cite{haleplidis2015network, zhou2014research, onfts016}.
+Deşi este cel mai utilizat protocol, OpenFlow nu este singura interfață de Sud pentru rețelele definite prin programe soft. Există și alte propuneri pentru acest tip de interfețe, dintre care amintim: \gls{netconf}, \gls{forces}, OpFlex, \gls{pof}, \gls{ovsdb}, \gls{rofl}, \gls{hal}, OpenState etc. \cite{haleplidis2015network, zhou2014research, onfts016}.
 
 \paragraph{Nivelul 3: Entitățile de tip \textit{hypervisor} de rețea}
 
@@ -166,15 +166,15 @@ Un echipament de control centralizat reprezintă o entitate care administrează 
 
 Pe de altă parte, un sistem de operare de rețea distribuit poate rezolva problema extensibilităţii rețelei, fiind potrivit pentru orice tip de rețea. Această distribuţie poate fi realizată printr-un grup de echipamente de control care să se afle în același loc, sau printr-un set de dispozitive distribuite fizic în mai multe locuri. Această ultimă variantă ar putea fi mai potrivită pentru prevenirea diferitelor defecţiuni logice sau fizice. Câteva exemple de astfel de echipamente de control distribuite: Onix \cite{koponen2010onix}, HP VAN SDN, PANE, HyperFlow \cite{tootoonchian2010hyperflow}, \gls{onos}~\cite{berde2014onos} sau \gls{odl}~\cite{medved2014opendaylight}, SMaRtLight \cite{botelho2014smartlight} etc.
 
-Însă, în cazul echipamentelor de control distribuite, apare o problemă destul de importantă: consistenţa datelor. Toate echipamentele de control ar trebui să citească aceeaşi valoare imediat după ce aceasta a fost scrisă, pentru a evita cazul când dispozitivele de control au vederi diferite asupra rețelei. Majoritatea propunerilor de până acum oferă doar o \textit{consistență scăzută}, ceea ce înseamnă că, după ce o valoare a fost scrisă într-un nod de control, valoarea se va reflecta, \textit{la un moment dat}, în toate nodurile de control. Acest lucru implică o perioadă de timp în care dispozitivele de control au viziuni diferite asupra rețelei. Există și propuneri de echipamente de control care oferă o \textit{consistență ridicată} (Onix și SMaRtLight) \cite{koponen2010onix, botelho2014smartlight}, care garantează citirea aceleiaşi valori de către orice nod de control, imediat după scrierea acesteia.
+Însă, în cazul echipamentelor de control distribuite, apare o problemă destul de importantă: consistenţa datelor. Toate echipamentele de control ar trebui să citească aceeaşi valoare imediat după ce aceasta a fost scrisă, pentru a evita cazul când dispozitivele de control au imagini diferite asupra rețelei. Majoritatea propunerilor de până acum oferă doar o \textit{consistență scăzută}, ceea ce înseamnă că, după ce o valoare a fost scrisă într-un nod de control, valoarea se va reflecta, \textit{la un moment dat}, în toate nodurile de control. Acest lucru implică o perioadă de timp în care dispozitivele de control au viziuni diferite asupra rețelei. Există și propuneri de echipamente de control care oferă o \textit{consistență ridicată} (Onix și SMaRtLight) \cite{koponen2010onix, botelho2014smartlight}, care garantează citirea aceleiaşi valori de către orice nod de control, imediat după scrierea acesteia.
 
 Există și situaţii unde o abordare hibridă ar fi cea mai potrivită, o arhitectură în care să existe grupuri de echipamente de control într-o parte de rețea și dispozitive de control distribuite în alte locuri din rețea.
 
-\paragraph{Nivelul 5: Interfețe de tip \textit{northbound}}
+\paragraph{Nivelul 5: Interfețe de Nord (\textit{northbound})}
 
-Interfețele de tip \textit{northbound}, împreună cu cele de tip \textit{southbound} constituie cele mai importante două abstractizări din arhitectura rețelelor definite prin software. Dacă cele din urmă asigură comunicaţia dintre echipamentele de control și dispozitivele din planul de date al rețelei, fiind astfel mai mult orientate spre hardware, interfeţele de tip \textit{northbound} alcătuiesc, în mare parte, un ecosistem software. Încă nu există un astfel de tip de interfețe care să fie acceptat la scară largă, cum este OpenFlow în cazul celor te tip \textit{southbound}, însă acest lucru se va întâmpla probabil, pe măsură ce paradigma \gls{sdn} se va maturiza și cazurile de utilizare ale acestui tip de arhitectură de rețea se vor contura mai exact.
+Interfețele de Nord, împreună cu cele de Sud constituie cele mai importante două abstractizări din arhitectura rețelelor definite prin software. Dacă cele din urmă asigură comunicaţia dintre echipamentele de control și dispozitivele din planul de date al rețelei, fiind astfel mai mult orientate spre hardware, interfeţele de Nord alcătuiesc, în mare parte, un ecosistem software. Încă nu există un astfel de tip de interfețe care să fie acceptat la scară largă, cum este OpenFlow în cazul celor de Sud, însă acest lucru se va întâmpla probabil, pe măsură ce paradigma \gls{sdn} se va maturiza și cazurile de utilizare ale acestui tip de arhitectură de rețea se vor contura mai exact.
 
-Este nevoie ca acest tip de interfețe să fie deschise și standardizate, astfel încât să se asigure interoperabilitatea și portabilitatea programelor soft pe mai multe tipuri de dispozitive de control. Un exemplu în acest sens îl constituie NOSIX~\cite{wundsam2012nosix}. Aceasta este o propunere, care poate fi comparată cu standardul \gls{posix} din sistemele de operare și care oferă abstractizări ce garantează independenţa față de limbajul de programare și dispozitivul de control folosite \cite{barney2009posix}. Dintre celelalte propuneri de interfețe de tip \textit{northbound} amintim: RESTCONF, SFNet, Pyretic, NetCore, Frenetic, Nettle etc. \cite{bierman2017restconf, yap2010towards, reich2013modular, monsanto2012compiler}.
+Este nevoie ca acest tip de interfețe să fie deschise și standardizate, astfel încât să se asigure interoperabilitatea și portabilitatea programelor soft pe mai multe tipuri de dispozitive de control. Un exemplu în acest sens îl constituie NOSIX~\cite{wundsam2012nosix}. Aceasta este o propunere, care poate fi comparată cu standardul \gls{posix} din sistemele de operare și care oferă abstractizări ce garantează independenţa față de limbajul de programare și dispozitivul de control folosite \cite{barney2009posix}. Dintre celelalte propuneri de interfețe de Nord amintim: RESTCONF, SFNet, Pyretic, NetCore, Frenetic, Nettle etc. \cite{bierman2017restconf, yap2010towards, reich2013modular, monsanto2012compiler}.
 
 \paragraph{Nivelul 6: Virtualizarea dată de limbajul de programare}
 
