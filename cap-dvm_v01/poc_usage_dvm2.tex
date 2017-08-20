@@ -1,3 +1,38 @@
 \section{Folosirea în contextul demonstraţiilor de concept a DVM versiunea 2}
 
-Standardizare: ONF, etc..
+Așa cum prima versiune a \gls{dvm} a fost foarte importantă în contextul celei de-a doua demonstraţii de concept a rețelelor de transport de date fără fir și a doua versiune a acestui simulator a fost o unealtă critică pentru pregătirea celei de-a treia demonstraţii de concept. A permis dezvoltatorilor de aplicații \gls{sdn} să le testeze și să le depaneze într-o manieră facilă, eliminând necesitatea deţinerii unor echipamente de rețea și a mediatorului asociat.
+
+\gls{sdn} nu influenţează doar modul în care rețelele sunt controlate și administrate, ci și modul în care sunt organizate proiectele și modul în care anumite cerinţe și capabilităţi sunt dezvoltate și implementate. Dacă înainte aplicațiile și dispozitivele de rețea erau oferite împreună, de către producătorii de echipamente, interfeţele standard dintre dispozitive și echipamentele de control \gls{sdn}, sau dintre echipamentele de control și aplicații, oferă posibilitatea companiilor de a oferi doar anumite bucăţi din întreaga soluție. Aceste companii pot profita de simulatorul \gls{dvm}, deoarece le oferă acces la aceste interfețe fără a avea nevoie să deţină echipamente de rețea foarte scumpe.
+
+Avantajul pe care \gls{dvm} îl oferă și care a fost folosit în cea de-a treia demonstraţie de concept \gls{onf} este reprezentat de faptul că orice modificare în modelele \gls{yang} dezvoltate poate fi testată cu ajutorul simulatorului, pentru că oferă o modalitate rapidă de a o implementa, simulând astfel, din punctul de vedere al echipamentului de control \gls{sdn}, interacţiunea cu un dispozitiv de rețea. După dezvoltarea simulatorului și a aplicațiilor \gls{sdn}, acestea din urmă pot fi testate, chiar înainte ca software-ul din elementele de rețea să fie implementat. Cu toate acestea, este nevoie ca aplicațiile să efectueze teste de integrare cu dispozitivele de rețea, deoarece comportamentul simulatorului nu poate fi identic cu cel al echipamentelor. Simulatorul \gls{dvm} folosit în cea de-a treia demonstraţie de concept nu a simulat dispozitivele de rețea, ci nivelul mediator care oferă interfaţa \gls{netconf} ce expune modelele \gls{yang} dorite. A fost posibilă simularea diferitor topologii de rețea, având dispozitive cu diferite configurări și interfețe de transport de date. Simulatorul \gls{dvm} a fost și în cazul celor de-a doua și de-a treia demonstraţii de concept \gls{onf} unealta principală pentru a putea crea o topologie de rețea simulată. 
+
+Simulatorul a fost folosit și pentru teste de extensibilitate și de performanţă ale aplicațiilor \gls{sdn} dezvoltate. Fişierul \gls{xml} de configurare poate fi manipulat foarte uşor, adăugând interfețe de transport de date echipamentelor sau intrări pentru valorile indicatorilor de performanţă. De exemplu, un dispozitiv de rețea are nevoie de 24 de ore pentru a genera 96 de intrări ale indicatorilor de performanţă de 15 minute și 30 de zile pentru a genera 30 de intrări ale indicatorilor de performanţă de 24 de ore. O altă funcție importantă a \gls{dvm} care a fost folosită în pregătirea demonstraţiei de concept a fost cea de generare a notificărilor \gls{netconf}. Au putut fi simulate diferite tipuri de notificări care să apară la un interval de timp configurabil.
+
+În mod evident, timpii de răspuns ai simulatorului sunt foarte rapizi, deoarece nu există o comunicaţie cu un echipament de rețea real și nu există nici nevoia de a procesa valorile atributelor care sunt citite din dispozitivele de rețea. Nevoia de a procesa valorile unor atribute apare în cazul mediatoarelor reale, în momentul în care atributele definite în modelul informațional pentru microunde nu se potrivesc în totalitate cu atributele dispozitivului și o anume procesare a acelei valori este necesară pentru a transforma-o în ce se doreşte în modelul \gls{yang}.
+
+Tabelul \ref{tab:Table_3} ilustrează diferenţele între \gls{dvm} și un mediator real, în diferite situaţii care au apărut în pregătirea celei de-a treia demonstraţii de concept \gls{onf}.
+
+\begin{table}[hp]
+	
+	\caption{Comparaţie între comportamentele unui mediator real și al simulatorului în diferite situații \cite{stancu2017enabling}.\label{tab:Table_3}}
+	\begin{tabular}{|M{0.5\textwidth}|M{0.2\textwidth}|M{0.2\textwidth}|}
+		\hline
+		\textbf{Situația} & \textbf{\emph{Mediator real}} & \textbf{\emph{Simulatorul DVM}} \tabularnewline
+		\hline 
+		Dezvoltarea aplicațiilor \gls{sdn} & costisitoare & eficientă \tabularnewline
+		\hline 
+		Timpul de implementare & greoi & rapid \tabularnewline
+		\hline 
+		Topologia de rețea & complex de schimbat & flexibilă, uşor de schimbat \tabularnewline
+		\hline 
+		Generarea notificărilor \gls{netconf} & greu de controlat & simplă \tabularnewline
+		\hline 
+		Timpi de răspuns & reali & nerealişti \tabularnewline
+		\hline 
+		Procesare a valorilor atributelor & în unele cazuri & nu este nevoie \tabularnewline
+		\hline \end{tabular}
+\end{table}
+
+Pentru a oferi un suport mai bun testelor de extensibilitate și de performanţă ale aplicațiilor, simulatorul \gls{dvm} ar fi putut implementa timpi de răspuns configurabili la operaţiile \gls{netconf} sau generarea de notificări care să urmărească anumite pofile temporale, în funcție de nevoile aplicațiilor \gls{sdn}.
+
+La fel ca în cazul versiunii anterioare a \gls{dvm}, înregistrarea simulatoarelor la echipamentul de control \gls{sdn} se face manual, cu ajutorul interfeţei grafice a controlerului, care stabileşte apoi conexiunea securizată și iniţiază o sesiune \gls{netconf}.
