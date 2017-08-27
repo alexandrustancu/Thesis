@@ -1,5 +1,11 @@
 \chapter{Simulatorul reţelelor de transport de date fără fir (WTE)\label{ch:wte}}
 
+\graphicspath{ {cap-wte/figures/} }
+
+Simulatorul rețelelor de transport de date fără fir (\textit{Wireless Transport Emulator - WTE}) a apărut ca o evoluţie firească a simulatoarelor prezentate anterior, \gls{dvm}. Acestea din urmă aveau dezavantajul de a simula elemente de rețea independente, prin implementarea unor servere \gls{netconf} care să expună modelele informaționale dezvoltate de \gls{onf}, TR-532 și TR-512. Nu era simulată topologia în întregimea ei, adică să cuprindă și legăturile dintre dispozitivele de rețea. \gls{wte} propune o arhitectură care să implementeze și acest aspect, oferind astfel o soluție completă, prin care se poate genera și trafic de date.
+
+Secţiunile următoare vor prezenta arhitectura \gls{wte}, detalii despre implementare, dar și modalitatea în care acesta poate fi folosit în prezentarea cazurilor de utilizare propuse în demonstraţiile de concept \gls{onf}, chiar după ce acestea s-au încheiat.
+
 \input{cap-wte/architecture}
 \input{cap-wte/implementation}
 \input{cap-wte/poc_usage}
