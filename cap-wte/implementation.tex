@@ -6,7 +6,7 @@ Implementarea \gls{wte} se bazează pe cod scris în limbajele Python, pentru nu
 
 \gls{wte} folosește fişiere de configurare, pentru a oferi o interfață simplă de configurare utilizatorilor. Există două fişiere scrise în limbajul \gls{json}, \textit{topology.json} și \textit{config.json}, primul pentru descrierea topologiei care va fi simulată și celălalt pentru a descrie caracteristicile configurabile ale simulatorului. Din aceeaşi categorie fac parte și modelele informaționale. Fişierele \gls{yang} asociate acestora sunt folosite de către simulator pentru a fi expuse de serverul \gls{netconf}.
 
-Fişierul \gls{json} care descrie topologia are un format static, ce va fi prezentat în continuare. Acesta este ilustrat și în Figura \ref{fig:wte_topology_json}.
+Fişierul \gls{json} care descrie topologia are un format static, ce va fi prezentat în continuare. Acesta este ilustrat și în Figura~\ref{fig:wte_topology_json}.
 
 \begin{figure}[h]
 	\centering
@@ -19,13 +19,13 @@ Pentru descrierea topologiei unei rețele este suficient să cunoaştem dispozit
 
 Fiecare element de rețea va avea mai multe detalii prezente în fişierul de topologie. Identificatorul unic reprezintă un nume unic ce va fi dat fiecărui dispozitiv de rețea, pentru a-l putea recunoaşte în topologia simulată. Tipul elementului se referă la soluţia ce va fi folosită pentru implementarea serverului \gls{netconf} ce va expune modelele informaționale dorite. În cazul alegerii \gls{dvm}, valoarea acestui element este \textit{OpenYuma}. Pentru cea de-a patra demonstraţie de concept \gls{onf}, o companie a folosit simulatorul \gls{wte} pentru dezvoltarea de aplicații \gls{sdn}, dar a preferat o soluție mai simplă, dar cu mai puţine capabilităţi pentru implementarea serverului \gls{netconf}, astfel că a folosit acest parametru pentru a informa nucleul simulatorului să folosească celălalt server. 
 
-Elementul cel mai important al unui dispozitiv de rețea este reprezentat de obiectul \gls{json} de tip listă \textit{interfețe}, fiind responsabil pentru descrierea interfeţelor acelui dispozitiv. O interfață a unui echipament are ca echivalent un obiect \gls{ltp} din modelul informațional de bază. Obiectul \textit{nivel} din lista de interfețe reprezintă nivelul de transport asociat obiectului \gls{ltp}. Valorile pe care acesta le poate lua sunt descrise în modelul informațional de bază, în Capitolul \ref{ch:sdn_in_contextul_wt}: \gls{mwps}, \gls{mws}, \gls{etc}, \gls{ety} și \gls{eth}. Fiecare interfață prezintă câteva detalii de care simulatorul are nevoie: identificatorul obiectului \gls{ltp}, alarmele suportate (simulatorul are nevoie de această valoare, deoarece în modelul informațional pentru microunde, pe baza acestui atribut este definită lista alarmelor suportate și aceasta are un număr minim elemente; dacă nu este implementat acest număr minim, modelul \gls{yang} prezentat de serverul \gls{netconf} nu va fi valid), obiectul \gls{ltp} care reprezintă serverul pentru obiectul \gls{ltp} curent, dacă există (pentru reprezentarea relaţiilor de tip client-server dintre interfețe), referinţa la portul fizic și pachetul condiţional folosit de acest obiect \gls{ltp}.
+Elementul cel mai important al unui dispozitiv de rețea este reprezentat de obiectul \gls{json} de tip listă \textit{interfețe}, fiind responsabil pentru descrierea interfeţelor acelui dispozitiv. O interfață a unui echipament are ca echivalent un obiect \gls{ltp} din modelul informațional de bază. Obiectul \textit{nivel} din lista de interfețe reprezintă nivelul de transport asociat obiectului \gls{ltp}. Valorile pe care acesta le poate lua sunt descrise în modelul informațional de bază, în Capitolul~\ref{ch:sdn_in_contextul_wt}: \gls{mwps}, \gls{mws}, \gls{etc}, \gls{ety} și \gls{eth}. Fiecare interfață prezintă câteva detalii de care simulatorul are nevoie: identificatorul obiectului \gls{ltp}, alarmele suportate (simulatorul are nevoie de această valoare, deoarece în modelul informațional pentru microunde, pe baza acestui atribut este definită lista alarmelor suportate și aceasta are un număr minim elemente; dacă nu este implementat acest număr minim, modelul \gls{yang} prezentat de serverul \gls{netconf} nu va fi valid), obiectul \gls{ltp} care reprezintă serverul pentru obiectul \gls{ltp} curent, dacă există (pentru reprezentarea relaţiilor de tip client-server dintre interfețe), referinţa la portul fizic și pachetul condiţional folosit de acest obiect \gls{ltp}.
 
 Următorul obiect \gls{json} care face parte din fişierul de descriere a topologiei este tot un obiect de tip listă, \textit{conexiuni Ethernet}. Acestea reprezintă obiectele \gls{fc} definite în modelul informațional de bază. Practic, acestea exprimă conexiunile interne între interfeţele dispozitivului (de exemplu, traficul de pe o interfaţă radio R1 va fi dirijat către o interfață Ethernet E2). De aceea, obiectul \textit{conexiuni Ethernet} conţine două obiecte de tipul porturi \gls{fc}, care descriu exact această legătură internă. Obiectul \gls{json} \textit{mașină gazdă} care este prezent aici este folosit pentru simularea unei gazde care folosește această conexiune internă și este utilizat pentru generarea sau recepţionarea de trafic în cadrul simulatorului.
 
 Obiectul \gls{json} \textit{topologii} descrie legăturile dintre dispozitivele de rețea. Există două niveluri de transport la care pot exista aceste conexiuni: \gls{mwps}, adică legăturile fără fir și \gls{ety}, reprezentând conexiunile Ethernet dintre echipamente. Fiecare legătură este reprezentată ca un obiect \gls{json} de tip listă, având doar două elemente, ce descriu cele două capete ale conexiunii, prin identificatorul unic al dispozitivului și identificatorul unic al interfeţei.
 
-Cel de-al doilea fişier \gls{json} folosit de \gls{wte} este \textit{config.json}. Formatul acestuia poate fi observat în Figura \ref{fig:wte_config_json}.
+Cel de-al doilea fişier \gls{json} folosit de \gls{wte} este \textit{config.json}. Formatul acestuia poate fi observat în Figura~\ref{fig:wte_config_json}.
 
 \begin{figure}[h]
 	\centering
@@ -50,7 +50,7 @@ Am decis astfel împărțirea atributelor prezente în modelele informaționale 
 
 Fiecare instanţă de server \gls{netconf} va avea la dispoziţie două fişiere \gls{xml}: unul care conţine valorile atributelor de configurare, reprezentând baza de stocare de date de iniţializare și celălalt cuprinzând atributele de stare, oferind utilizatorilor diferite valori implicite. Structura acestora este bazată pe modelele informaționale de bază și pentru microunde și este generată automat. Detalii despre această generare vor fi oferite în secţiunea următoare, în contextul prezentării nucleului \gls{wte}.
 
-Mecanismul de generare a notificărilor \gls{netconf} fictive a fost îmbunătăţit în această versiune și este prezentat în Figura \ref{fig:wte_notif_generation}. 
+Mecanismul de generare a notificărilor \gls{netconf} fictive a fost îmbunătăţit în această versiune și este prezentat în Figura~\ref{fig:wte_notif_generation}. 
 
 \begin{figure}[h]
 	\centering
@@ -63,7 +63,44 @@ Până acum, generarea acestora se baza pe intervalul dintre două notificări c
 
 \subsection{Nucleul simulatorului WTE}
 
+Nucleul simulatorului \gls{wte} reprezintă codul de bază ce oferă infrastructura care, împreună cu celelalte unelte software, furnizează funcţionalitatea propusă: emularea unei rețele de transport de date fără fir, în același timp expunând modelele informaționale dezvoltate de \gls{onf}, TR-532 și TR-512. Este implementat în limbajul Python, folosind o metodă orientată pe obiecte, fiind astfel flexibil și modular, oferind posibilitatea unei extinderi facile. Această abordare este similară cu cea folosită în cadrul celui mai important simulator pentru rețele definite prin software, \textit{mininet}. Asemănările, dar și motivele pentru care \gls{wte} nu a fost dezvoltat pe infrastructura oferită de \textit{mininet} vor fi detaliate în capitolul următor. Diagrama de clase a nucleului \gls{wte} este prezentată în Figura~\ref{fig:wte_class_diagram}.
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\textwidth]{wte_class_diagram}
+	\caption{Diagrama de clase a nucleului WTE.}
+	\label{fig:wte_class_diagram}
+\end{figure}
+
+Clasele proiectate pentru \gls{wte} sunt folosite în scopul reprezentării obiectelor care au o anumită semnificaţie în interiorul simulatorului. Astfel, clasa \textit{Emulator} este cea mai importantă, asigurând mediul în care toate celelalte instanţe ale obiectelor \gls{wte} vor fi create. Respectă modelul de programare obiect orientată \textit{Singleton}, însemnând că un singur obiect de acest tip va exista în momentul execuţiei programului. Este responsabilă de încărcarea și analizarea fişierelor \gls{json} de configurare a simulatorului. Parametrii din fişierul \textit{config.json} vor fi salvaţi ca variabile de execuţie, pentru a putea fi folosiţi ulterior. În cazul fişierului \textit{topology.json}, clasa \textit{Emulator} este responsabilă de analiza acestuia și de crearea obiectelor reprezentând elementele de rețea, respectiv legăturile de date dintre interfeţele acestora. Această clasă oferă și metode pentru executarea unor comenzi în maşina Linux sub care rulează \gls{wte}.
+
+Clasa \textit{NetworkElement} este folosită pentru reprezentarea unui dispozitiv de rețea. În funcție de fişierul care descrie topologia, vor fi create mai multe instanţe ale acestei clase de către obiectul \textit{Emulator}. Atributele clasei sunt reprezentate, printre altele, de numele elementului de rețea, tipul acestuia (acest tip se referă de fapt la soluţia aleasă pentru implementarea serverului \gls{netconf} asociat, care poate fi \gls{dvm} sau altă variantă ce poate fi dezvoltată de către utilizator), lista conexiunilor Ethernet interne (reprezentând practic obiectele \gls{fc} din modelul informațional de bază), scheletul fişierului \gls{xml} care conţine atributele \gls{yang} configurabile, necesar pentru iniţializarea serverului \gls{netconf} și scheletul fişierului \gls{xml} care conţine atributele de stare, din care \gls{dvm} va returna valorile asociate acestora. Clasa \textit{NetworkElement} este responsabilă și pentru menținerea listei de obiecte reprezentând interfeţele pe care acel dispozitiv le prezintă. Oferă metode pentru crearea acestora, dar și pentru alterarea fişierelor \gls{xml} astfel încât să reflecte configurația definită de către utilizator în topologie. Celelalte metode importante pe care această clasă le oferă sunt în legătură cu lucrul cu containerul \textit{docker} asociat elementului de rețea: executarea de comenzi în interiorul containerul, iniţializarea containerului, copierea fişierelor \gls{xml} asociate \gls{dvm} în interiorul containerului \textit{docker}, etc.
+
+Există mai multe clase care definesc obiecte de tip interfață a unui echipament de rețea, în funcție de tipul acestora. Tipul lor este dat de nivelul de transport specificat în modelul informațional de bază. Astfel, clasele asociate interfețelor de rețea sunt:
+\begin{itemize}
+	\item \textit{MwpsInterface} - asociată obiectelor \gls{ltp} de pe nivelul de transport \gls{mwps};
+	\item \textit{MwsInterface} - asociată obiectelor \gls{ltp} de pe nivelul de transport \gls{mws};
+	\item \textit{MwEthInterface} - asociată obiectelor \gls{ltp} de pe nivelul de transport \gls{etc};
+	\item \textit{ElectricalEtyInterface} - asociată obiectelor \gls{ltp} de pe nivelul de transport \gls{ety};
+	\item \textit{EthCtpInterface} - asociată obiectelor \gls{ltp} de pe nivelul de transport \gls{eth}.
+\end{itemize}
+
+Toate aceste clase oferă funcţionalitatea asociată unei interfețe, cu elementele specifice date de nivelul de transport la care operează (de exemplu relaţia client-server dintre obiectele \gls{ltp}, metode pentru alterarea fişierelor \gls{xml} asociate \gls{dvm} cu informații despre interfaţa respectivă, etc.).
+
+Clasa \textit{Topology} reprezintă topologiile care se definesc în fişierul de configurare. Acestea pot fi prezente la două niveluri, \gls{mwps} și \gls{ety}. Aceste obiecte conţin de fapt obiectele de tip legătură, ce definesc topologia de rețea.
+
+Clasa \textit{Link} reprezintă o legătură dintre două interfețe de rețea. Este responsabilă de stocarea celor două capete ce formează această legătură, dar și să valideze faptul că aceste capete sunt valide (există obiecte de tip interfață create anterior, între care se va putea face legătura efectivă). O metodă importantă pe care această clasă o oferă este cea responsabilă de crearea efectivă a legăturii (prin \gls{ovs} sau prin perechi Ethernet virtuale, așa cum va fi descris ulterior) dintre interfeţele de rețea Linux prezente în containerul \textit{docker}.
+
+Figura~\ref{fig:wte_seq_diagram} prezintă o diagramă de secvenţă simplificată ce arată iniţializarea \gls{wte}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\textwidth]{wte_seq_diagram}
+	\caption{Diagrama de secvenţă simplificată a inițializării WTE.}
+	\label{fig:wte_seq_diagram}
+\end{figure}
+
+Construirea fişierelor \gls{xml} folosite de către \gls{dvm} este responsabilitatea fiecărui obiect dispozitiv de rețea, împreună cu interfeţele sale asociate. Fiecare obiect va altera modelul informațional adăugând informaţiile care îl reprezintă, astfel încât serverul \gls{netconf} să le pună la dispoziţie aplicațiilor \gls{sdn}. Apoi, aceste fişiere vor fi copiate în interiorul containerului \textit{docker} asociat și vor fi folosite de către \gls{dvm} pentru iniţializarea serverului \gls{netconf} și citirea valorilor atributelor de stare.
 
 \subsection{Reprezentarea interfeţelor unui dispozitiv de rețea}
 

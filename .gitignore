@@ -64,4 +64,4 @@ dkms.conf
 *.blg
 *.ist
 *.gz(busy)
-thesis.pdf
+*.pdf
