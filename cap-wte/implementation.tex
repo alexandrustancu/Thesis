@@ -34,11 +34,11 @@ Cel de-al doilea fişier \gls{json} folosit de \gls{wte} este \textit{config.jso
 	\label{fig:wte_config_json}
 \end{figure}
 
-Acesta conţine detaliile de conectare la echipamentul de control \gls{sdn}, în cazul în care se doreşte înregistrarea automată a dispozitivelor simulate la controler, constând în adresa IP, portul, numele de utilizator și parola folosite pentru autentificare. Următorul parametru descrie adresa rețelei de administrare care să fie folosită pentru alocarea adreselor IP pentru interfeţele de administrare ale echipamentelor simulate. În același mod se poate configura și plaja de adrese IP care să fie alocată maşinilor gazdă, folosite pentru generarea și recepţionarea traficului de date prin rețeaua simulată. 
+Acesta conţine detaliile de conectare la echipamentul de control \gls{sdn}, în cazul în care se doreşte înregistrarea automată a dispozitivelor simulate la controler, constând în adresa \gls{ip}, portul, numele de utilizator și parola folosite pentru autentificare. Următorul parametru descrie adresa rețelei de administrare care să fie folosită pentru alocarea adreselor \gls{ip} pentru interfeţele de administrare ale echipamentelor simulate. În același mod se poate configura și plaja de adrese \gls{ip} care să fie alocată maşinilor gazdă, folosite pentru generarea și recepţionarea traficului de date prin rețeaua simulată. 
 
 Echipamentele simulate pot genera, la fel ca \gls{dvm}, notificări \gls{netconf} fictive. Intervalul de timp dintre două astfel de notificări este prezent în fişierul \gls{json} de configurare. Parametrul \textit{înregistrare automată în \gls{odl}} este folosit de către utilizator pentru a configura simulatorul să facă sau nu înregistrarea automată a dispozitivelor în echipamentul de control specificat prin detaliile de conectare anterioare. Metoda de înregistrare folosită este specifică echipamentului de control \gls{odl}, dar poate fi extinsă și pentru altele.
 
-Următorii parametri sunt folosiţi în cazul în care utilizatorul nu doreşte adrese IP diferite pentru administrarea dispozitivelor simulate. Astfel, echipamentele vor putea fi accesate prin adresa IP a maşinii pe care rulează simulatorul, dar prin porturi diferite. De aceea, este nevoie ca utilizatorul să configureze portul de bază (portul de la care începe numărătoarea în momentul asignării porturilor pentru fiecare element de rețea simulat), pentru protocoalele \gls{netconf} și \gls{ssh}.
+Următorii parametri sunt folosiţi în cazul în care utilizatorul nu doreşte adrese \gls{ip} diferite pentru administrarea dispozitivelor simulate. Astfel, echipamentele vor putea fi accesate prin adresa \gls{ip} a maşinii pe care rulează simulatorul, dar prin porturi diferite. De aceea, este nevoie ca utilizatorul să configureze portul de bază (portul de la care începe numărătoarea în momentul asignării porturilor pentru fiecare element de rețea simulat), pentru protocoalele \gls{netconf} și \gls{ssh}.
 
 \subsection{Adaptarea DVM pentru WTE}
 
@@ -104,8 +104,107 @@ Construirea fişierelor \gls{xml} folosite de către \gls{dvm} este responsabili
 
 \subsection{Reprezentarea interfeţelor unui dispozitiv de rețea}
 
+Fiecare interfață de rețea a echipamentelor, cu alte cuvinte fiecare obiect \gls{ltp} din modelul informațional de bază, indiferent de nivelul de transport pe care se află (\gls{mwps}, \gls{mws}, \gls{etc}, \gls{ety}, \gls{eth}), va fi reprezentată ca o interfață Linux, în interiorul containerului \textit{docker} asociat fiecărui dispozitiv de rețea. Legăturile interne din acest container, între interfeţele de rețea, vor fi descrise în paragrafele următoare. Pentru o mai bună înţelegere, acestea sunt prezentate în Figurile \ref{fig:wte_ltp_relationship} și \ref{fig:wte_ltp_ne_internal}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics{wte_ltp_relationship}
+	\caption{Obiectele LTP în contextul legăturii dintre două dispozitive de transport de date fără fir.}
+	\label{fig:wte_ltp_relationship}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\textwidth]{wte_ltp_ne_internal}
+	\caption{Obiectele LTP în interiorul unui dispozitiv de transport de date fără fir.}
+	\label{fig:wte_ltp_ne_internal}
+\end{figure}
+
+Toate obiectele \gls{ltp} vor fi adăugate ca interfețe Linux având drept nume identificatorul unic universal asociat acestuia, așa cum este definit de către utilizator în fişierul de topologie al simulatorului. Adăugarea se va face cu ajutorul utilitarului \textit{\textbf{ip}}, oferit de Linux. Obiectele \gls{ltp} care se află la nivelurile \gls{mwps} sau \gls{ety} reprezintă interfețe ale dispozitivului de rețea cu exteriorul (radio, respectiv Ethernet). Astfel, dacă nu sunt definite legături în topologie care să utilizeze obiectul respectiv, acesta va fi reprezentat în containerul \textit{docker} drept o \textit{interfață fictivă de rețea (dummy interface)}. Adăugarea obiectului în Linux, în cazul în care acesta face parte dintr-o legătură va fi descrisă în sub-secţiunea următoare.
+
+Obiectele \gls{ltp} de pe celelalte niveluri de transport vor avea, obligatoriu, o relaţie de tip client-server. Relaţiile, așa cum sunt definite în modelul informațional pentru microunde, sunt următoarele: obiectele de pe nivelurile \gls{mwps} și \gls{ety} nu își pot asuma rolul de client. Un obiect \gls{ltp} de pe nivelul \gls{mws} va avea drept server un obiect \gls{ltp} de pe nivelul \gls{mwps}, în timp ce un obiect \gls{ltp} de pe nivelul \gls{etc} va avea drept server un obiect \gls{ltp} de pe nivelul \gls{etc}. Obiectele \gls{ltp} de pe nivelul \gls{eth} pot avea ca server obiecte \gls{ltp} de pe nivelurile \gls{etc} sau \gls{ety}. Figura \ref{fig:wte_ltp_ne_internal} prezintă aceste legături. Soluția pentru reprezentarea acestor relaţii de tip client-server în Linux este folosirea interfeţelor de tip \textit{legătură (bond)}. O interfață de tip \textit{legătură} este o conexiune logică ce poate agrega mai multe interfețe. În acest mod, putem privi conexiunea logică, sau agregatorul, ca fiind clientul, iar interfeţele care sunt agregate ca fiind serverul. Considerând exemplul din Figura \ref{fig:wte_ltp_relationship}, pentru un element de rețea, obiectele \gls{ltp} de pe nivelul \gls{mws} vor fi reprezentate ca interfețe de tip \textit{legătură}, care agregă o singura interfață fiecare, dintre cele asociate obiectelor \gls{ltp} de pe nivelul \gls{mwps}, în timp ce obiectul \gls{ltp} de pe nivelul \gls{etc} va fi reprezentat printr-o interfață de tip \textit{legătură} ce va agrega cele două interfețe logice create pentru obiectele \gls{ltp} de pe nivelul \gls{mws}. Există mai multe moduri de funcţionare pentru interfeţele de tip \textit{legătură}, dar cel ales pentru \gls{wte} este acela în care distribuţia traficului pe conexiunile ce fac parte din acestă interfață logică este una simplă: conexiunile agregate sunt iterate și li se transmite câte un pachet de date, pe rând (\textit{round-robin}).
+
+Obiectele \gls{ltp} de pe nivelul \gls{eth} sunt reprezentate ca interfețe virtuale de tip \textit{vlan}. Deoarece acestea au obligatoriu un identificator \gls{vlan} asociat, unei interfețe care reprezintă obiecte \gls{ltp} de pe nivelurile \gls{ety} sau \gls{etc} i se va putea asocia o interfață virtuală ce va semnifica obiectul \gls{ltp} de pe nivelul \gls{eth}.
+
+Reprezentarea obiectelor de tip conexiuni Ethernet (\gls{fc}) este diferită față de celelalte. În acest caz, legătura dintre două obiecte de tip \gls{ltp} de pe nivelul \gls{eth} se face printr-o interfață logică de tip \textit{bridge}. Acesteia i se adaugă cele două interfețe de tip \textit{vlan} ce reprezintă cele două capete ale conexiunii Ethernet, astfel traficul va fi dirijat, prin interfaţa de tip \textit{bridge}, între acestea.
+
 \subsection{Legăturile dintre interfeţele elementelor de rețea}
+
+Au existat două abordări pentru reprezentarea legăturilor dintre elementele de rețea: prima metodă consta în realizarea unor conexiuni între două interfețe printr-un comutator software \gls{ovs}, iar cea de-a doua în crearea unei legături logice între două interfețe prin perechi Ethernet virtuale (\textit{veth pairs}). Cea din urmă a fost aleasă pentru implementare, însă vor fi prezentate ambele metode, pentru a înţelege de ce am făcut această alegere. Abordările considerate sunt ilustrate în Figura \ref{fig:wte_link_representation}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\textwidth]{wte_link_representation}
+	\caption{Legăturile dintre interfeţele elementelor de rețea considerate pentru WTE: a) prin OVS; b) prin perechi Ethernet virtuale}
+	\label{fig:wte_link_representation}
+\end{figure}
+
+Prima soluție considerată pentru reprezentarea legăturilor dintre interfeţele elementelor de rețea a fost prin intermediul unui comutator software \gls{ovs}. Astfel, pentru fiecare legătură trebuia creat un comutator \gls{ovs}, la care cele două capete ale legăturii (câte unul în fiecare container \textit{docker} asociat elementului de rețea) trebuiau legate. Ar fi fost posibilă și crearea unui singur comutator \gls{ovs} care să cuprindă toate legăturile din topologie, însă apoi trebuiau implementate restricţii la nivelul acestuia, pentru a nu exista legături nedorite (între alte interfețe decât cele specificate în fişierul de topologie). Modelarea legăturii fără fir era posibilă prin aplicarea unor restricţii de calitate de servicii - \gls{qos} asupra conexiunii respective, în interiorul comutatorului \gls{ovs} (de exemplu lărgimea de bandă să fie una specifică unei legături între echipamente de transport de date fără fir). Această abordare prezenta însă un dezavantaj major. Presupunând că o interfață Linux dintr-un container \textit{docker} ar fi fost dezactivată, era de așteptat ca acest lucru să fie vizibil și în celălalt capăt al legăturii și interfaţa îndepărtată să raporteze o stare operaţională \textit{închisă}. Deoarece legătura era făcută prin comutatorul software \gls{ovs}, acest lucru nu s-ar fi întâmplat, pentru că stările porturilor din comutator sunt independente și nu s-ar fi propagat între porturile prin care se face conexiunea. Acest dezavantaj major a condus la căutarea unei alte soluții pentru reprezentarea acestor legături. O altă problemă pe care această abordare o ridică este consumul de resurse. Fiecare legătură va avea propriul comutator \gls{ovs} asociat, astfel că pentru o topologie de rețea cu multe conexiuni, va exista un consum de resurse nejustificat de mare. De asemenea, instalarea \gls{wte} pe maşina Linux gazdă va fi mai greoaie, deoarece ar implica și instalarea prealabilă a \gls{ovs}.
+
+Răspunsul la provocările menţionate anterior constă în următorul concept pus la dispoziţie de Linux: perechi Ethernet virtuale. Acestea reprezintă perechi de interfețe virtuale Linux de rețea care sunt conectate printr-un \textit{tunel}. Tot traficul care va intra într-o interfață va fi dirijat către interfaţa pereche, ca și când acestea ar fi conectate printr-un cablu Ethernet virtual. În cazul \gls{wte}, în momentul în care se încearcă reprezentarea unei legături din fişierul de topologie, o astfel de pereche este creată. Apoi, un capăt al conexiunii va fi asociat containerului \textit{docker} asociat primului dispozitiv de rețea al legăturii, iar celălalt capăt celui de-al doilea container \textit{docker}. În acest mod, în momentul în care una dintre interfețe este dezactivată, acest lucru se va propaga imediat la interfaţa îndepărtată, care va raporta o stare operaţională \textit{închisă}. Modelarea unei legături fără fir se poate face în mod facil folosind această abordare. Linux oferă utilitarul \textit{\textbf{tc}} - Traffic Control. Acesta poate instrui nucleul sistemului de operare să altereze caracteristicile unei interfețe virtuale, precum: debitul interfeţei, latenţa pe care interfaţa o introduce în traficul pe care îl transportă, procentul de pachete pe care interfaţa de poate pierde, etc.
+
+Pe baza considerentelor expuse anterior, a fost implementată ce-a de-a doua soluție pentru reprezentarea legăturilor dintre interfeţele echipamentelor de rețea: folosirea perechilor Ethernet virtuale.
+
+\subsection{Modelarea conexiunilor dintre dispozitivele simulate ca legături fără fir}
+
+O parte importantă a \gls{wte}, care este reprezentativă pentru considerarea acestuia ca fiind un simulator de rețele de transport de date fără fir, nu doar o unealtă care expune modelele informaționale dezvoltate de \gls{onf} conform cu fişierul în care este definită topologia, este dată de modelarea conexiunilor dintre dispozitivele de rețea simulate având caracteristicile unei legături fără fir.
+
+Caracteristicile ce pot fi alterate prin unealta \textit{\textbf{tc}} oferită de Linux, care sunt relevante pentru simularea unei legături fără fir, sunt reprezentate de debitul interfeţei, întârzierea pachetelor ce tranzitează această conexiune și procentul de pachete pierdute.
+
+Debitul unei interfețe este influenţat de mai mulți parametri, dintre care unii sunt configurabili. TR-532 oferă și o formulă de calcul pentru acest debit, tocmai pentru ca aplicațiile \gls{sdn} ce se folosesc de acest model să fie aliniate asupra acestei metode. Ecuația \ref{eq:txCapacityFormula} descrie această metodă de calcul.
+
+\begin{equation}\label{eq:txCapacityFormula}
+\begin{split}
+txCapacity& =AirInterface::AirInterfaceConfiguration::\textbf{\textit{txChannelBandwidth}}\\
+& \quad * \log_{2}(AirInterface::AirInterfaceStatus::\textbf{\textit{modulationCur}})\\
+& \quad * AirInterface::AirInterfaceStatus::\textbf{\textit{codeRateCur}} * 0,85
+\end{split}
+\end{equation}
+unde:
+
+$txCapacity$ = debitul interfeţei de rețea, în kbps
+
+$txChannelBandwidth$ = lărgimea de bandă a emiţătorului, în kHz
+
+$modulationCur$ = schema de modulaţie folosită, în număr de simboluri
+
+$codeRateCur$ = procentul informaţiei utile din informaţia transmisă\\
+
+Rata de transmisie a încărcăturii utile, reprezintă produsul dintre rata de transmisie brută și procentul informaţiei utile din informaţia transmisă ($codeRateCur$), unde acesta reprezintă numărul de biţi ai încărcăturii utile, raportat la numărul total de biţi transmişi. Acest procent apare din cauza redundanţei introduse pentru corectarea de erori și alte informații care nu fac parte din încărcătura utilă și are o valoare tipică între 0,85 și 0,95~\cite{kizer2013digital}. În cazul \gls{wte}, am considerat valoarea acestei rate curente a codului ca fiind 0,9.
+
+Rata de transmisie brută este definită ca produsul dintre rata simbolurilor și numărul de biţi per simbol. Valoarea acestuia din urmă este dată de modulaţia folosită la transmisie. Modulaţia tipică folosită în echipamentele de transport de date fără fir este Modulaţia de Amplitudine în Cuadratură - \gls{qam}. În acest caz, numărul de biţi per simbol este definit ca $\log_{2}$ din numărul de constelaţii (reprezentat în modelul informațional prin $modulationCur$). Rata simbolurilor tipică pentru acest tip de echipamente este de aproximativ 85\% din lărgimea de bandă ($txChannelBandwidth$) a canalului de transmisie~\cite{kizer2013digital}.
+
+Această formulă este implementată în cadrul \gls{wte}. În momentul în care unul dintre atributele unei interfețe pe baza cărora se face calculul se schimbă (de exemplu o aplicație \gls{sdn} modifică lărgimea de bandă folosită de o interfață a unui echipament, sau modulaţia care se folosește pentru transmisie), instanţa \gls{dvm} asociată dispozitivului de rețea va calcula debitul interfeţei respective și apoi va folosi utilitarul Linux \textit{\textbf{tc}} pentru a modifica această caracteristică a interfeţei. În acest mod, legăturile fără fir vor fi modelate în simulator astfel încât să semene cu cele din rețelele reale, din punctul de vedere al ratei de transmisie.
+
+În legătură cu latenţa pe care o introduc echipamentele de transport de date fără fir, tipic aceasta este de ordinul zecilor sau sutelor de microsecunde~\cite{kizer2013digital}. Această plajă de întârzieri nu pot fi simulate în cadrul \gls{wte}, deoarece utilitarul \textit{\textbf{tc}} oferă modificarea latenţei unei interfețe de rețea doar cu o rezoluţie de o milisecundă. Pentru a putea beneficia de rezoluţii mai mici, de ordinul microsecundelor, imaginea sistemului de operare Linux din containerul \textit{docker} ar trebui modificată și nucleul sistemului de operare recompilat, astfel încât să permită utilizarea unor cronometre de sistem de timp real. Versiunea curentă a \gls{wte} nu implementează acest comportament, dar acesta poate constitui subiectul unei alte cercetări, pentru a modela legăturile dintre interfeţele dispozitivelor de rețea simulate cât mai aproape de realitate.
+
+Alterarea procentului de pachete pierdute de o interfață de rețea nu este încă folosit în \gls{wte}, deoarece presupunem că legătura fără fir este realizată în condiţii atmosferice optime, astfel încât să nu se piardă pachete. Ar putea fi totuşi utilizat, spre exemplu prin expunerea unei comenzi în linia de comandă a simulatorului, care să crească sau să scadă acest procent pentru o conexiune. Astfel, s-ar putea simula condiţii atmosferice potrivnice în anumite părţi ale topologiei de rețea. În acest mod ar putea fi testată, de exemplu, o aplicație \gls{sdn} care să detecteze faptul că există probleme în rețea (din cauza unei furtuni se pierd pachete, sau scade modulaţia folosită la emisie) și să dirijeze traficul prin altă parte a topologiei.
 
 \subsection{Linia de comandă}
 
+\gls{wte} dispune de un modul care oferă o interfață prin linie de comandă utilizatorului. După ce acesta porneşte simulatorul, la sfârşitul inițializării (adică după ce au fost create toate obiectele asociate cu topologia de rețea specificată în fişierul de configurare) se lansează modulul care implementează interfaţa prin linie de comandă - \gls{cli}. Acesta oferă utilizatorului posibilitatea unei interacţiuni simple cu simulatorul, prin furnizarea unor comenzi clare, simplu de folosit. O captură de ecran a acestei interfețe este prezentată în Figura \ref{fig:wte_cli_screenshot}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics{wte_cli_screenshot}
+	\caption{Captură de ecran a interfeţei prin linie de comandă a WTE.}
+	\label{fig:wte_cli_screenshot}
+\end{figure}
+
+Comenzile implementate sunt următoarele:
+\begin{itemize}
+	\item \textit{afişare noduri} - afişează pe ecran numele tuturor dispozitivelor de rețea simulate;
+	\item \textit{afişare informații nod} - afişează pe ecran toate informaţiile disponibile despre un anumit echipament de rețea simulat: nume, adresa \gls{ip} a interfeţei de administrare, portul folosit de serverul \gls{netconf}, lista interfeţelor nodului respectiv împreună cu nivelul de transport pe care acesta se află;
+	\item \textit{afişare legături} - afişează pe ecran toate legăturile dintre interfețe prezente în topologia simulată, inclusiv nivelul de transport la care este realizată aceasta (\gls{mwps} sau \gls{ety});
+	\item \textit{pornire terminal} - porneşte un terminal care se leagă la containerul \textit{docker} asociat unui element de rețea, oferind acces la mediul Linux din interiorul imaginii. Acesta poate fi folosit de utilizator pentru a interacţiona într-un mod facil și direct cu elementul de rețea respectiv.
+	\item \textit{înregistrare / anularea înregistrării \gls{odl}} - această comandă oferă posibilitatea de a înregistra / anula înregistrarea în mod automat pentru elementele de rețea la / de la echipamentul de control \gls{sdn} (în particular \gls{odl}). Detaliile de conectare la echipamentul de control \gls{sdn} sunt cele specificate în fişierul de configurare al \gls{wte};
+	\item \textit{închidere} - această comandă poate fi folosită de către utilizator pentru închiderea simulatorului (împreună cu toate obiectele pe care acesta le-a creat în interiorul maşinii Linux gazdă).
+\end{itemize}
+
 \subsection{Generarea traficului de date}
+
+Pentru a oferi o soluție completă de simulare, inclusiv validarea topologiei și a legăturilor create, \gls{wte} pune la dispoziţie utilizatorilor și posibilitatea de a genera trafic de date între anumite puncte ale rețelei. În acest scop este folosită unealta software \textit{iperf3} \cite{iperf32017, tirumala2005iperf}. Aceasta este instalată în sistemul de operare Linux din imaginea \textit{docker} folosită de fiecare dispozitiv de rețea simulat.
+
+Toate conexiunile descrise până acum sunt făcute la nivelul 2 (legătură de date) din stiva \gls{osi}. Astfel, interfeţele Linux din containerul \textit{docker} nu folosesc adrese \gls{ip} (în afară de cea de administrare). Generarea de trafic se face între două interfețe, una jucând rolul de client, iar cealaltă de server. Pentru ca unealta \textit{iperf3} să poată funcţiona, este nevoie de adăugarea de adrese \gls{ip} celor două interfețe. \gls{wte} poate face acest lucru în mod automat, dacă în fişierul care descrie topologia, obiectului \textit{conexiune Ethernet} i se adaugă un atribut \textit{gazdă}. Astfel, acelui obiect i se asociază, la nivel teoretic, un port capabil să genereze sau să recepţioneze trafic. Practic, o adresă \gls{ip} este adăugată la interfaţa asociata acelui obiect. Apoi, utilizatorul va putea genera trafic între oricare două astfel de porturi. 
+
+Unealta \textit{iperf3} permite generarea de trafic \gls{tcp} sau \gls{udp}, oferind în același timp posibilitatea de a măsura latenţa pachetelor, variaţia acestei latenţe (jitter) sau lărgimea de bandă a canalului de comunicaţie folosit.

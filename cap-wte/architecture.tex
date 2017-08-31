@@ -15,14 +15,14 @@ Există mai multe unelte care sunt folosite în arhitectura \gls{wte}, care împ
 
 \textit{Rețelele docker} reprezintă o facilitate oferită de soluţia \textit{docker} prin care se poate izola și stiva de rețea asociată unei imagini \textit{docker}. Astfel, un container poate fi asociat unei \textit{rețele docker} și imaginile ce aparţin unor \textit{rețele docker} diferite sunt izolate și din punctul de vedere al comunicației dintre ele. Un utilizator își poate crea diferite \textit{rețele docker}, având adrese de rețea sau spaţii de adrese la alegere.
 
-Din punctul de vedere al legăturilor ce se pot face între aceste containere, mai exact între interfeţele Linux ce fac parte din imaginile \textit{docker} care reprezintă elementele de rețea, au fost considerate două abordări, după cum se poate vedea în Figura \ref{fig:wte_links}. În prima abordare, s-a încercat folosirea unui comutator software prin intermediul căruia să se facă conexiunile, \textit{Comutatorul Virtual Deschis} - \gls{ovs}. Cea de-a doua abordare constă în crearea unei conexiuni între aceste interfețe printr-o \textit{pereche Ethernet virtuală (virtual ethernet pair - \textbf{veth})}. Diferenţele între cele două abordări vor fi detaliate în secţiunea următoare.
+Din punctul de vedere al legăturilor ce se pot face între aceste containere, mai exact între interfeţele Linux ce fac parte din imaginile \textit{docker} care reprezintă elementele de rețea, au fost considerate două abordări, care vor fi descrise în secțiunea următoare. În prima abordare, s-a încercat folosirea unui comutator software prin intermediul căruia să se facă conexiunile, \textit{Comutatorul Virtual Deschis} - \gls{ovs}. Cea de-a doua abordare constă în crearea unei conexiuni între aceste interfețe printr-o \textit{pereche Ethernet virtuală (virtual ethernet pair - \textbf{veth})}. %Diferenţele între cele două abordări vor fi detaliate în secţiunea următoare.
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=1\textwidth]{wte_links}
-	\caption{Legăturile între dispozitivele de rețea simulate în WTE: a) prin OVS; b) prin \textit{veth}.}
-	\label{fig:wte_links}
-\end{figure}
+%\begin{figure}[h]
+%	\centering
+%	\includegraphics[width=1\textwidth]{wte_links}
+%	\caption{Legăturile între dispozitivele de rețea simulate în WTE: a) prin OVS; b) prin \textit{veth}.}
+%	\label{fig:wte_links}
+%\end{figure}
 
 În urma proiectării \gls{wte} a rezultat o abordare simplă: în momentul inițializării, simulatorul ar trebui să analizeze fişierul care conţine topologia ce trebuie simulată. Apoi, ar trebui să construiască \textit{rețelele docker} asociate fiecărui dispozitiv de rețea definit în topologie și să pornească imaginile \textit{docker} necesare, să creeze interfeţele Linux asociate cu diferitele niveluri de transport ale obiectelor \gls{ltp} definite în topologie, după care să construiască legăturile dintre aceste interfețe.
 

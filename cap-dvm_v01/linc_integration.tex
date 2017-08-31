@@ -23,7 +23,7 @@ Datorită naturii modulare a comutatorului \gls{linc}, a apărut o nouă impleme
 
 \subsubsection{Interfaţa NETCONF}
 
-Comutatorul software \gls{linc} expune de asemenea și o interfață \gls{netconf}. Este folosită de către protocolul OF-Config și este disponibilă pentru un comutator doar dacă acel protocol este folosit. În cazul în care este permisă utilizarea acestuia, o nouă aplicație Erlang este pornită în cadrul nodului Erlang: \textit{enetconf}, care pornește un server \gls{netconf} ce aşteaptă conexiuni pe IP-ul și portul selectate de utilizator.
+Comutatorul software \gls{linc} expune de asemenea și o interfață \gls{netconf}. Este folosită de către protocolul OF-Config și este disponibilă pentru un comutator doar dacă acel protocol este folosit. În cazul în care este permisă utilizarea acestuia, o nouă aplicație Erlang este pornită în cadrul nodului Erlang: \textit{enetconf}, care pornește un server \gls{netconf} ce aşteaptă conexiuni pe adresa \gls{ip} și portul selectate de utilizator.
 
 Această abordare prezintă un dezavantaj major: un singur server \gls{netconf} este pornit pentru comutatorul \gls{linc}, astfel că nu se pot accesa comutatoarele logice care alcătuiesc comutatorul \gls{linc} individual prin interfaţa \gls{netconf}. Acestea pot fi configurate doar prin intermediul protocolului OpenFlow.
 
