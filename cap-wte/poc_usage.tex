@@ -10,9 +10,9 @@ Modelul informațional pentru Ethernet a fost unul simplificat, având aceeaşi 
 
 Modelul pentru sincronizare a fost o extindere a modelului dezvoltat de \gls{itu-t} pentru protocolul \gls{ptp}. Extinderea a constat în adăugarea unor parametri, dar și integrarea cu modelul informațional de bază, printr-un obiect \gls{lp}. Parametrii asociaţi acestui model nu au avut echivalent în implementarea interfeţelor în sistemul de operare Linux al containerelor \textit{docker}, au avut doar valori implicite ce au fost expuse echipamentului de control \gls{sdn}.
 
-\subsection{Altă implementare de server NETCONF}
+\subsection{Implementare alternativă de server NETCONF}
 
-Arhitectura modulară și abordarea flexibilă pe care se bazează \gls{wte} facilitează integrarea acestuia cu alte implementări de servere \gls{netconf}, în funcție de nevoile fiecărui utilizator.
+Arhitectura modulară și abordarea flexibilă pe care se bazează \gls{wte} facilitează integrarea acestuia cu alte implementări de servere \gls{netconf}, în funcție de nevoile fiecărui utilizator. În acest scop, trebuie folosită aceeași abordare, în sensul în care implementarea de server dorită trebuie să ofere un container \textit{docker} care să poată fi utilizat de către infrastructura \gls{wte}, pentru simularea elementelor de rețea.
 
 În contextul celei de-a patra demonstraţii de concept \gls{onf}, o companie membră a proiectului \gls{wt}, \textit{highstreet technologies} a ales să integreze propriul server \gls{netconf}, o implementare Java bazată tot pe fişiere de configurare \gls{xml}, dar cu mult mai puţine facilități decât \gls{dvm}. Au făcut această alegere deoarece implementarea lor era potrivită doar pentru teste simple și rapide, oferind o soluție de server \gls{netconf} mai uşor de folosit decât \gls{dvm}.
 
