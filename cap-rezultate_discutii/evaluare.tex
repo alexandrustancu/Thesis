@@ -22,21 +22,21 @@ Toţi parametrii care au fost menţionaţi anterior au fost măsuraţi în difer
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.6\textwidth]{topologies_tree}
-	\caption{Topologie de rețea arbore: a) exemplu pentru 7 elemente simulate; b) detaliul unui dispozitiv simulat în acest caz}
+	\caption{Topologie de rețea arbore, exemplu pentru 7 elemente simulate}
 	\label{fig:topologies_tree}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.6\textwidth]{topologies_ring}
-	\caption{Topologie de rețea inel: a) exemplu pentru 6 elemente simulate; b) detaliul unui dispozitiv simulat în acest caz}
+	\caption{Topologie de rețea inel, exemplu pentru 6 elemente simulate}
 	\label{fig:topologies_ring}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.6\textwidth]{topologies_mesh}
-	\caption{Topologie de rețea plasă: a) exemplu pentru 4 elemente simulate; b) detaliul unui dispozitiv simulat în acest caz}
+	\caption{Topologie de rețea plasă, exemplu pentru 4 elemente simulate}
 	\label{fig:topologies_mesh}
 \end{figure}
 
@@ -160,7 +160,7 @@ Următoarea caracteristică măsurată pentru \gls{wte} a fost spaţiul pe care 
 
 Aceste figuri relevă faptul că spaţiul de stocare depinde liniar în principal de numărul de interfețe simulate, după cum se poate observa foarte clar în Figurile~\ref{fig:storage_vs_ne_mesh} și \ref{fig:storage_vs_intf_mesh}. În graficul ce reprezintă spaţiul de stocare în funcție de numărul de dispozitive simulate într-o topologie de tip plasă se poate observa o dependenţă pătratică, în timp ce în graficul ce prezintă spaţiul de stocare în funcție de numărul de interfețe simulate, în topologia de tip plasă, această dependenţă este liniară, de unde concluzia că această caracteristică măsurată depinde în principal de numărul interfeţelor simulate.
 
-În cazul rețelelor de tip inel, la un număr de aproximativ 120 de dispozitive simulate, însemnând 960 de interfețe simulate, spaţiul de stocare ocupat de \gls{wte} ajunge în jurul valorii de 240 MB, pentru rețelele de tip arbore cu un număr de 120 de dispozitive simulate, adică aproximativ 1270 de interfețe simulate, sunt utilizaţi aproximativ 330 MB. Pentru rețelele de tip plasă, la un număr de 10 dispozitive simulate, având 270 de interfețe simulate, spaţiul pe disc utilizat ajunge la 65 MB. Practic, aceste valori duc la o medie aproximativă de 0.25 MB per interfață simulată.
+În cazul rețelelor de tip inel, la un număr de aproximativ 120 de dispozitive simulate, însemnând 960 de interfețe simulate, spaţiul de stocare ocupat de \gls{wte} ajunge în jurul valorii de 240 MB, pentru rețelele de tip arbore cu un număr de 120 de dispozitive simulate, adică aproximativ 1270 de interfețe simulate, sunt utilizaţi aproximativ 330 MB. Pentru rețelele de tip plasă, la un număr de 10 dispozitive simulate, având 270 de interfețe simulate, spaţiul pe disc utilizat ajunge la 65 MB. Practic, aceste valori duc la o medie aproximativă de 0,25 MB per interfață simulată.
 
 \subsection{Puterea de procesare folosită}
 
@@ -224,6 +224,18 @@ Rezultatele măsurătorilor procentului de memorie cu acces aleator folosită de
 	\label{fig:mem_vs_intf_mesh}
 \end{figure}
 
-Se observă o dependenţă liniară între numărul de interfețe simulate și procentul de memorie cu acces aleator folosită de \gls{wte}. În exemplele următoare considerăm mediile de simulare de tip \textit{cloud}, care au 8 GB de memorie cu acces aleator. Pentru topologia de tip plasă, la un număr de 200 de interfețe simulate, procentul de memorie cu acces aleator utilizat de simulator ajunge la aproximativ 5\%. Pentru topologia arbore, la 1000 de interfețe simulate, valoarea procentului de memorie cu acces aleator ajunge la aproximativ 24\%, iar în cazul topologiei de tip inel, pentru același număr de interfețe, această valoare ajunge tot în jurul pragului de 24\%. Putem concluziona astfel că, indiferent de topologia simulată, \gls{wte} are nevoie de aproximativ 0,025\% memorie cu acces aleator pentru fiecare interfață pe care o va simula, adică 2 MB.
+Se observă o dependenţă liniară între numărul de interfețe simulate și procentul de memorie cu acces aleator folosită de \gls{wte}. În exemplele următoare considerăm mediile de simulare de tip \textit{cloud}, care au 8 GB de memorie cu acces aleator. Pentru topologia de tip plasă, la un număr de 200 de interfețe simulate, procentul de memorie cu acces aleator utilizat de simulator ajunge la aproximativ 5\%. Pentru topologia arbore, la 1000 de interfețe simulate, valoarea procentului de memorie cu acces aleator ajunge la aproximativ 24\%, iar în cazul topologiei de tip inel, pentru același număr de interfețe, această valoare ajunge tot în jurul pragului de 24\%. Putem concluziona astfel că, indiferent de topologia simulată, \gls{wte} are nevoie de aproximativ 0,025\% memorie cu acces aleator pentru fiecare interfață pe care o va simula, adică 2 MB, având în vedere că am considerat cazul în care sistemul dispune de un total de 8 GB.
 
 \subsection{Concluziile evaluării}
+
+Rezultatele evaluării ilustrează câteva concluzii interesante despre \gls{wte}. Variabila care influenţează cel mai mult comportamentul simulatorului nu este numărul de dispozitive de rețea simulate, așa cum poate era de așteptat, ci numărul de interfețe pe care topologia le conţine. Cu cât acest număr este mai mare, cu atât timpul de iniţializare a simulatorului, memoria cu acces aleator utilizată și spaţiul pe disc necesar sunt mai mari.
+
+Timpul de iniţializare a simulatorului este destul de mare în cazul topologiilor mari, ajungând la sute de secunde pentru rețele care conţin mii de interfețe. Acest timp nu este critic pentru funcționarea \gls{wte}, deoarece, odată pornit, simulatorul nu mai are nevoie să fie redeschis decât în cazul în care se doreşte schimbarea topologiei simulate. Influenţează, însă, experienţa de folosire pe care o are utilizatorul. După ce s-a optimizat iniţializarea \gls{wte} prin gruparea creării interfeţelor Linux asociate obiectelor \gls{ltp}, timpul de iniţializare a fost îmbunătăţit semnificativ, dar este influenţat în continuare în principal de durata creării și pornirii containerelor \textit{docker} asociate dispozitivelor de rețea simulate. Acest timp nu poate fi îmbunătăţit, deoarece utilitarul \textit{docker} nu permite paralelizarea acestor operații.
+
+Spaţiul de stocare pe disc nu pare să reprezinte o problemă în folosirea \gls{wte}, chiar și în cazul simulării unor topologii de rețea foarte mari. Acesta depinde de numărul de interfețe, simulatorul având nevoie de aproximativ 0,25 MB pentru fiecare interfață simulată. Astfel, pentru o rețea ce conţine 4000 de interfețe, \gls{wte} va folosi aproximativ 1 GB de memorie pe disc, ceea ce nu reprezintă o problemă pentru majoritatea sistemelor din zilele noastre.
+
+Memoria cu acces aleator necesară pentru execuţia \gls{wte} prezintă o dependenţă liniară de numărul de interfețe simulate. Conform rezultatelor prezentate anterior, indiferent de tipul de topologie care este simulată, \gls{wte} are nevoie de aproximativ 2 MB de memorie cu acces aleator pentru fiecare interfață care trebuie reprezentată.
+
+Puterea de procesare este caracteristica simulatorului care variază cel mai mult și cel mai puţin predictibil. Observăm o creștere a acesteia cu numărul de dispozitive de rețea simulate, cu numărul de interfețe dar și cu numărul de fluxuri de trafic ce se injectează în rețea. Această caracteristică nu este predictibilă, deoarece utilitarul \textit{docker} este responsabil de alocarea de putere de procesare fiecărui container, în funcție de nevoile acestuia. În timpul execuţiei, aceste nevoi pot varia și în funcție de aplicațiile din echipamentul de control \gls{sdn} care administrează rețeaua.
+
+Dimensiunea topologiilor ce pot fi simulate este dată astfel, în principal, de cantitatea de memorie cu acces aleator care este disponibilă pe sistemul unde a fost instalat mediul de simulare. În cazul unui sistem cu 4 GB de astfel de memorie, pot fi simulate până la 1000 de interfețe. Chiar dacă, conform măsurătorilor efectuate anterior, aceste 1000 de interfețe ar ocupa doar 2 GB din memoria cu acces aleator a sistemului, nu se poate folosi mai multă memorie, deoarece aceasta este folosită și de sistemul de operare și de alte eventuale aplicații care sunt executate în sistem. Pentru sisteme mai capabile, cu 8 GB de memorie cu acces aleator, numărul interfeţelor simulate poate depăşi 2500. Acestea se referă la interfeţele Linux asociate obiectelor \gls{ltp} din modelele informaționale propuse de \gls{onf}. Dacă ne referim doar la interfeţele de rețea prin care se fac legături în topologiile simulate, având în vedere că o astfel de interfață (de tip \gls{mwps}) are asociate încă două obiecte (de tip \gls{mws} și \gls{etc}), atunci putem afirma că se pot simula aproximativ 800 de astfel de interfețe.
