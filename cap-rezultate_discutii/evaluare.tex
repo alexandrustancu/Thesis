@@ -195,7 +195,27 @@ Se poate observa, cu ajutorul acestor măsurători, că puterea de procesare fol
 
 Pentru un număr de 250 de interfețe simulate, în cazul topologiei de tip plasă, puterea de procesare utilizată de \gls{wte} ajunge la aproximativ 3\%, pentru un număr de 1200 de interfețe simulate, în cazul topologiei de tip inel, puterea de procesare folosită se situează în jurul valorii de 12\%, în timp ce pentru același număr de interfețe în cazul topologiei de tip arbore simulatorul utilizează aproximativ 14\% din puterea de procesare a sistemului.
 
-TRAFFIC ALSO HERE
+Un alt scenariu a fost considerat pentru a măsura influenţa injectării de trafic în rețeaua simulată asupra puterii de procesare de care \gls{wte} are nevoie. Acesta a constat în simularea unei topologii de tip plasă cu redundanţă maximă cu 10 dispozitive, așa cum se poate observa în Figura~\ref{fig:mesh_topo_traffic}. Pentru ca figura să nu fie încărcată în mod excesiv, au fost ilustrate doar legăturile de date prin care trece traficul dintre dispozitivele de rețea.
+
+\begin{figure}[hp]
+	\centering
+	\includegraphics[width=1\textwidth]{mesh_topo_traffic}
+	\caption{Topologie de tip plasă în care sunt reprezentate fluxurile de trafic simulate}
+	\label{fig:mesh_topo_traffic}
+\end{figure}
+
+Primul pas a fost măsurarea puterii de procesare utilizată de topologia simulată în condiţiile în care nu era injectat niciun flux de trafic. Apoi, a fost măsurată puterea de procesare în cazul în care se folosea un flux de trafic, apoi două, până la cinci fluxuri, conform figurii anterioare.
+
+Figura~\ref{fig:cpu_mesh_traffic} prezintă valorile cu care puterea de procesare folosită de \gls{wte} creşte față de cazul fără trafic, în funcție de numărul de fluxuri de trafic ce se transmit în paralel prin rețeaua simulată.
+
+\begin{figure}[hp]
+	\centering
+	\includegraphics[width=0.8\textwidth]{cpu_mesh_traffic}
+	\caption{Puterea de procesare de care injectarea de trafic are nevoie, într-o rețea de tip plasă cu redundanţă maximă, în funcție de numărul de fluxuri de trafic injectate în rețea}
+	\label{fig:cpu_mesh_traffic}
+\end{figure}
+
+Putem observa că puterea de procesare folosită pentru transmiterea de trafic în rețeaua simulată creşte exponenţial cu numărul de fluxuri injectate, ajungând la 3\% pentru 5 astfel de conexiuni. Aceasta este utilizată de serverele și clienţii utilitarului \textit{iperf} asociaţi cu aceste operații de transfer de date.
 
 \subsection{Memoria cu acces aleator}
 
@@ -239,3 +259,5 @@ Memoria cu acces aleator necesară pentru execuţia \gls{wte} prezintă o depend
 Puterea de procesare este caracteristica simulatorului care variază cel mai mult și cel mai puţin predictibil. Observăm o creștere a acesteia cu numărul de dispozitive de rețea simulate, cu numărul de interfețe dar și cu numărul de fluxuri de trafic ce se injectează în rețea. Această caracteristică nu este predictibilă, deoarece utilitarul \textit{docker} este responsabil de alocarea de putere de procesare fiecărui container, în funcție de nevoile acestuia. În timpul execuţiei, aceste nevoi pot varia și în funcție de aplicațiile din echipamentul de control \gls{sdn} care administrează rețeaua.
 
 Dimensiunea topologiilor ce pot fi simulate este dată astfel, în principal, de cantitatea de memorie cu acces aleator care este disponibilă pe sistemul unde a fost instalat mediul de simulare. În cazul unui sistem cu 4 GB de astfel de memorie, pot fi simulate până la 1000 de interfețe. Chiar dacă, conform măsurătorilor efectuate anterior, aceste 1000 de interfețe ar ocupa doar 2 GB din memoria cu acces aleator a sistemului, nu se poate folosi mai multă memorie, deoarece aceasta este folosită și de sistemul de operare și de alte eventuale aplicații care sunt executate în sistem. Pentru sisteme mai capabile, cu 8 GB de memorie cu acces aleator, numărul interfeţelor simulate poate depăşi 2500. Acestea se referă la interfeţele Linux asociate obiectelor \gls{ltp} din modelele informaționale propuse de \gls{onf}. Dacă ne referim doar la interfeţele de rețea prin care se fac legături în topologiile simulate, având în vedere că o astfel de interfață (de tip \gls{mwps}) are asociate încă două obiecte (de tip \gls{mws} și \gls{etc}), atunci putem afirma că se pot simula aproximativ 800 de astfel de interfețe.
+
+Cu ajutorul acestei evaluări, a fost demonstrat că \gls{wte} poate reprezenta o soluție viabilă pentru dezvoltatorii de aplicații \gls{sdn}. Acesta permite simularea unor topologii diverse, care, în funcție de capabilitățile sistemului pe care este instalat, pot fi destul de mari, ajungând să conţină mii de interfețe de rețea. Astfel, dezvoltatorii pot executa și teste de extensibilitate pentru aplicațiile pe care le implementează. Chiar dacă rețelele reale, de producție, pot conţine mii de elemente și zeci de mii de interfețe, \gls{wte} este un prim pas pentru simularea unor astfel de rețele de transport de date fără fir, în contextul \gls{sdn}. În viitor, acest simulator se poate optimiza, astfel încât să permită reprezentarea unor astfel de rețele, la scara la care există în producție, sau se poate căuta o soluție în care \gls{wte} să fie executat în mod distribuit, pe mai multe sisteme.

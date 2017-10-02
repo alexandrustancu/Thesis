@@ -1,3 +1,15 @@
 \section{Comparaţie între WTE și alte abordări}
 
-Istoria reţelelor definite prin software.
+Simulatorul care constituie baza acestei lucrări, \gls{wte}, oferă o interfață \gls{netconf} care implementează modelele informaționale dezvoltate de \gls{onf}, TR-512 și TR-532, în contextul \gls{sdn} în rețelele de transport de date fără fir. Acestea sunt apărute destul de recent, astfel încât nu există încă unelte care să simuleze asemenea topologii și să expună modelele informaționale echipamentelor de control \gls{sdn}.
+
+Majoritatea simulatoarelor folosite pentru crearea de topologii de rețele definite prin software se bazează pe protocolul OpenFlow și sunt reprezentate de: \textit{mininet}, \textit{EstiNet} și \textit{ns-3}~\cite{lantz2010network,wang2013estinet,wang2014comparison,henderson2008network}. În continuare se va compara simulatorul \gls{wte} cu \textit{mininet}, deoarece acesta este cel mai folosit simulator în contextul \gls{sdn}~\cite{brandonheller2013}.
+
+Din punct de vedere arhitectural, \gls{wte} este foarte asemănător cu \textit{mininet}. Ambele se bazează pe un nucleu Python care se ocupă de toate aspectele simulării: crearea de mașini gazdă, de comutatoare sau de legături între acestea, prin perechi Ethernet virtuale. Dacă în cazul \textit{mininet} se simulează mașini gazdă, sub forma unor procese, care apoi se leagă la comutatoarele din rețea, în cazul \gls{wte} se pune accent pe simularea de dispozitive de rețea și pe funcţionalitatea oferită de acestea echipamentului de control \gls{sdn}, prin intermediul protocolului \gls{netconf}.
+
+Atât \textit{mininet}, cât și \gls{wte} folosesc, după iniţializarea topologiei ce se vrea a fi simulată, o interfață prin linie de comandă care aşteaptă comenzi de la utilizator. Aceasta are cunoştinţe cu privire la dispozitivele de rețea și legăturile dintre acestea și poate trimite comenzi echipamentelor sau poate informa utilizatorul cu privire la detalii despre starea acestora.
+
+Chiar dacă oferă funcționalități diferite, \textit{mininet} oferind OpenFlow, iar \gls{wte} bazându-se pe \gls{netconf}, ambele tipuri de simulatoare folosesc conceptul de virtualizare bazată pe containere Linux~\cite{handigol2012reproducible}. În cazul \textit{mininet}, acestea sunt folosite în mod nativ, prin utilizarea lor directă în Linux. \gls{wte} folosește utilitarul \textit{docker} pentru a crea containere ce reprezintă dispozitive de rețea.
+
+Abordările în cadrul celor două simulatoare, din punctul de vedere al alegerii topologiei care trebuie simulată, sunt diferite. \textit{Mininet} oferă posibilitatea de a porni simulatorul din linia de comandă, specificând prin anumiţi parametri tipul topologiei și dimensiunea acesteia. O altă posibilitate este crearea acesteia prin descrierea lor direct în codul Python, prin interfeţele de programare puse la dispoziţie. Simulatorul \gls{wte} prezintă altă abordare: descrierea topologiei într-un fişier de configurare, după un format prestabilit.
+
+Din punct de vedere funcțional ...
