@@ -12,4 +12,8 @@ Chiar dacă oferă funcționalități diferite, \textit{mininet} oferind OpenFlo
 
 Abordările în cadrul celor două simulatoare, din punctul de vedere al alegerii topologiei care trebuie simulată, sunt diferite. \textit{Mininet} oferă posibilitatea de a porni simulatorul din linia de comandă, specificând prin anumiţi parametri tipul topologiei și dimensiunea acesteia. O altă posibilitate este crearea acesteia prin descrierea lor direct în codul Python, prin interfeţele de programare puse la dispoziţie. Simulatorul \gls{wte} prezintă altă abordare: descrierea topologiei într-un fişier de configurare, după un format prestabilit.
 
-Din punct de vedere funcțional ...
+Din punct de vedere funcţional, cele două simulatoare folosesc aceeaşi metodă pentru reprezentarea legăturilor de rețea, perechi Ethernet virtuale, indiferent de punctele între care se doreşte legătura de date: între o mașină gazdă și un comutator, sau între două comutatoare, în cazul \textit{mininet}, sau între două dispozitive de rețea, în cazul \gls{wte}.
+
+În cazul \gls{wte}, fiecare dispozitiv de rețea este reprezentat ca un container \textit{docker}, în interiorul căruia este executat serverul \gls{netconf}, folosit pentru a expune modelele informaționale dezvoltate de \gls{onf}. În cazul \textit{mininet}, pentru reprezentarea comutatoarelor OpenFlow se folosește implicit soluţia software \gls{ovs}, care este executată nativ (fără să fie nevoie de virtualizare) în mediul în care este instalat simulatorul, sau utilizatorul poate alege să folosească alt comutator software capabil să ofere protocolul OpenFlow. Din acest motiv, timpul de iniţializare, dar și resursele consumate de către \gls{wte} sunt mai mari decât cele utilizate de \textit{mininet}.
+
+Din punctul de vedere al traficului care se poate transmite în rețelele simulate, în ambele cazuri se poate injecta trafic cu ajutorul utilitarului \textit{iperf3}.
