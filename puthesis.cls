@@ -168,10 +168,11 @@
     \clearpage
   \fi
   }
-\def\makeabbreviations{
-	\setacronymstyle{short-long}
+
+\def\makeabbreviations{	
+	\setacronymstyle{long-short-desc}
 	%for making the glossary more aligned in a table-like manner
-	\setglossarystyle{super}
+	\setglossarystyle{symbunitlong}
 	\addcontentsline{toc}{section}{Lista abrevierilor}
 	\printglossary[type=\acronymtype, title={Lista abrevierilor}]
 	\clearpage

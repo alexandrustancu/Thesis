@@ -110,11 +110,33 @@
 
 
 \usepackage[acronym,nomain,nonumberlist,nopostdot,nogroupskip]{glossaries}
-\usepackage{glossary-mcols}
-%\usepackage{glossaries-extra}
+%\usepackage[nonumberlist,nopostdot,nogroupskip]{glossaries}
 \makeglossaries
+\PrerenderUnicode{ș}
+\PrerenderUnicode{ț}
+\PrerenderUnicode{ă}
+\PrerenderUnicode{î}
+\PrerenderUnicode{â}
+
+\newglossarystyle{symbunitlong}{%
+	\setglossarystyle{long3col}% base this style on the list style
+	\renewcommand{\arraystretch}{1.2}
+	\renewenvironment{theglossary}{% Change the table type --> 3 columns
+		\begin{longtable}[c]{l p{0.4\textwidth} p{0.4\textwidth}}}%%
+		{\end{longtable}}%
+	%
+	\renewcommand*{\glossaryheader}{}
+	\renewcommand*{\glossentry}[2]{%  Change the displayed items
+		\glstarget{##1}{\glossentryname{##1}} %
+		& \glossentrydesc{##1}% Description
+		& \glsentryuseri{##1}  \tabularnewline
+	}
+}
+%\usepackage{glossary-mcols}
+%\usepackage{glossaries-extra}
 %\renewcommand{\glsnamefont}[1]{\textbf{#1}\hspace{0.5cm}-\hspace{0.25cm}}
 \input{abrevieri}
+%\input{abrevieriroen}
 
 \usepackage{array}
 \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
@@ -137,8 +159,6 @@
 %set parameters for longtable:
 % default caption width is 4in for longtable, but wider for normal tables
 \setlength{\LTcapwidth}{\textwidth}
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Printed vs. online formatting
@@ -274,6 +294,7 @@
 %\tableofcontents\clearpage
 
 % \include lets us split up the document (and each include starts a new page):
+
 \include{cap-introducere/introducere}
 \include{cap-introducere_in_sdn/introducere_in_sdn}
 \include{cap-sdn_in_contextul_wt/sdn_in_contextul_wt}
