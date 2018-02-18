@@ -118,15 +118,7 @@ Astfel, rețelele definite prin software pot fi definite cu ajutorul a trei abst
 
 \textit{Abstractizarea specificărilor} reprezintă capabilitatea unui program software din rețea de a exprima un anume comportament al acesteia fără a fi responsabil personal și de implementarea acestui comportament. Acest lucru se poate realiza prin soluții de virtualizare, precum și cu ajutorul limbajelor de programare de rețea.
 
-Arhitectura \gls{sdn} poate fi privită ca o structură cu mai multe niveluri, având fiecare funcțiile sale specifice. Unele niveluri sunt necesare în orice implementare \gls{sdn}, în timp ce altele pot fi prezente doar în anumite implementări particulare. Aceste niveluri sunt ilustrate în Figura \ref{fig:niveluri_sdn} și vor fi prezentate în continuare \cite{kreutz2015software}.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=1\textwidth]{niveluri_sdn}
-	\caption{Nivelurile rețelelor definite prin software}
-	\label{fig:niveluri_sdn}
-\end{figure}
-
+Arhitectura \gls{sdn} poate fi privită ca o structură cu mai multe niveluri, având fiecare funcțiile sale specifice. Unele niveluri sunt necesare în orice implementare \gls{sdn}, în timp ce altele pot fi prezente doar în anumite implementări particulare. Aceste niveluri au fost definite în~\cite{kreutz2015software} și vor fi prezentate în continuare.
 
 \paragraph{Nivelul 1: Infrastructura}
 
@@ -186,7 +178,7 @@ O altă formă de virtualizare dată de limbajul de programare o reprezintă îm
 
 Există diverse propuneri pentru astfel de soluții de virtualizare, cum ar fi: Pyretic, Splendid, libNetVirt, FlowVisor, IBM SDN VE etc. \cite{reich2013modular, schlesinger2012splendid, turull2012libnetvirt, sherwood2009flowvisor}.
 
-\paragraph{Nivelul 7: limbaje de programare în rețea}
+\paragraph{Nivelul 7: Limbaje de programare în rețea}
 
 Limbajele de programare au evoluat de la limbaje mașină, specifice hardware-ului, cum era limbajul de asamblare pentru arhitecturile x86, până la limbaje de nivel înalt, cum ar fi Java sau Python. În același mod, limbajele de programare folosite în programarea rețelelor evoluează de la OpenFlow (echivalentul limbajului de asamblare) la limbaje de nivel înalt, cum ar fi Pyretic, Procera, NetCore, Frenetic etc. \cite{reich2013modular, voellmy2012procera, monsanto2012compiler}.
 
@@ -203,3 +195,12 @@ Aplicațiile software vor reprezenta cea mai importantă parte a rețelelor defi
 Majoritatea aplicațiilor software din cadrul \gls{sdn} se încadrează într-una din următoarele cinci categorii, conform~\cite{kreutz2015software}: ingineria traficului, securitate și fiabilitate, măsurători și monitorizare, reţelistica centrelor de date, mobilitate și rețele fără fir.
 
 Programele software din categoria mobilitate și microunde își propun să faciliteze implementarea și administrarea rețelelor fără fir, cum ar fi rețelele locale fără fir - \gls{wlan} sau rețelele de telefonie mobilă. Un plan de control distribuit, cum există în momentul de față în rețelele fără fir, nu este optim pentru implementarea mecanismelor de transfer dintre celule, pentru micșorarea interferențelor, pentru alocarea resurselor radio, pentru administrarea spectrului limitat de frecvenţe etc. Aceste probleme sunt adresate în \gls{sdn} și se pot rezolva mai uşor cu ajutorul acestei noi paradigme.
+
+Figura~\ref{fig:niveluri_sdn} ilustrează aceste niveluri ale rețelelor definite prin software.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\textwidth]{niveluri_sdn}
+	\caption{Nivelurile rețelelor definite prin software}
+	\label{fig:niveluri_sdn}
+\end{figure}

@@ -16,7 +16,7 @@ set(gca, "fontsize", 12)
 xlabel('Numarul de dispozitive simulate', "fontsize", 12)
 grid on
 grid minor on
-ylabel('Puterea de procesare [%]', "fontsize", 12)
+ylabel('CPU usage [%]', "fontsize", 12)
 leg = legend('Local','Orbit Cloud','DT Cloud', "location", 'northwest')
 set(leg, "fontsize", 12)
 axis('tight')
@@ -44,7 +44,7 @@ set(gca, "fontsize", 12)
 xlabel('Numarul de interfete simulate', "fontsize", 12)
 grid on
 grid minor on
-ylabel('Puterea de procesare [%]', "fontsize", 12)
+ylabel('CPU usage [%]', "fontsize", 12)
 leg = legend('Local','Orbit Cloud','DT Cloud', "location", 'northwest')
 set(leg, "fontsize", 12)
 axis('tight')
@@ -72,7 +72,7 @@ set(gca, "fontsize", 12)
 xlabel('Numarul de legaturi de date simulate', "fontsize", 12)
 grid on
 grid minor on
-ylabel('Puterea de procesare [%]', "fontsize", 12)
+ylabel('CPU usage [%]', "fontsize", 12)
 leg = legend('Local','Orbit Cloud','DT Cloud', "location", 'northwest')
 set(leg, "fontsize", 12)
 axis('tight')

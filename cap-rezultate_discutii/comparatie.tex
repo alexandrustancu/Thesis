@@ -1,4 +1,4 @@
-\section{Comparaţie între WTE și alte abordări}
+\section{Alte abordări}
 
 Simulatorul care constituie baza acestei lucrări, \gls{wte}, oferă o interfață \gls{netconf} care implementează modelele informaționale dezvoltate de \gls{onf}, TR-512 și TR-532, în contextul \gls{sdn} în rețelele de transport de date fără fir. Acestea sunt apărute destul de recent, astfel încât nu există încă unelte care să simuleze asemenea topologii și să expună modelele informaționale echipamentelor de control \gls{sdn}.
 
@@ -14,6 +14,6 @@ Abordările în cadrul celor două simulatoare, din punctul de vedere al alegeri
 
 Din punct de vedere funcţional, cele două simulatoare folosesc aceeaşi metodă pentru reprezentarea legăturilor de rețea, perechi Ethernet virtuale, indiferent de punctele între care se doreşte legătura de date: între o mașină gazdă și un comutator, sau între două comutatoare, în cazul \textit{mininet}, sau între două dispozitive de rețea, în cazul \gls{wte}.
 
-În cazul \gls{wte}, fiecare dispozitiv de rețea este reprezentat ca un container \textit{docker}, în interiorul căruia este executat serverul \gls{netconf}, folosit pentru a expune modelele informaționale dezvoltate de \gls{onf}. În cazul \textit{mininet}, pentru reprezentarea comutatoarelor OpenFlow se folosește implicit soluţia software \gls{ovs}, care este executată nativ (fără să fie nevoie de virtualizare) în mediul în care este instalat simulatorul, sau utilizatorul poate alege să folosească alt comutator software capabil să ofere protocolul OpenFlow. Din acest motiv, timpul de iniţializare, dar și resursele consumate de către \gls{wte} sunt mai mari decât cele utilizate de \textit{mininet}.
+În cazul \gls{wte}, fiecare dispozitiv de rețea este reprezentat ca un container \textit{docker}, în interiorul căruia este executat serverul \gls{netconf}, folosit pentru a expune modelele informaționale dezvoltate de \gls{onf}. În cazul \textit{mininet}, pentru reprezentarea comutatoarelor OpenFlow se folosește implicit soluţia software \gls{ovs}, care este executată nativ (fără să fie nevoie de virtualizare) în mediul în care este instalat simulatorul, sau utilizatorul poate alege să folosească alt comutator software capabil să ofere protocolul OpenFlow. Din acest motiv, resursele consumate de către \gls{wte} sunt mai mari decât cele utilizate de \textit{mininet}. În schimb, din punctul de vedere al timpului de inițializare, \gls{wte} este mai eficient decât \textit{mininet}, după cum se poate observa comparând rezultatele măsurate cu rezultatele din~\cite{lantz2010network}.
 
 Din punctul de vedere al traficului care se poate transmite în rețelele simulate, în ambele cazuri se poate injecta trafic cu ajutorul utilitarului \textit{iperf3}.

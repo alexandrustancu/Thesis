@@ -157,18 +157,20 @@ Debitul unei interfețe este influenţat de mai mulți parametri, dintre care un
 \begin{split}
 txCapacity& =AirInterface::AirInterfaceConfiguration::\textbf{\textit{txChannelBandwidth}}\\
 & \quad * \log_{2}(AirInterface::AirInterfaceStatus::\textbf{\textit{modulationCurrent}})\\
-& \quad * AirInterface::AirInterfaceStatus::\textbf{\textit{codeRateCurrent}} * 0,85
+& \quad * AirInterface::AirInterfaceStatus::\textbf{\textit{codeRateCurrent}} * \textbf{symbRate}
 \end{split}
 \end{equation}
 unde:
 
-$txCapacity$ = debitul interfeţei de rețea, în kbps
+$txCapacity$ = debitul interfeţei de rețea, în kbps;
 
-$txChannelBandwidth$ = lărgimea de bandă a emiţătorului, în kHz
+$txChannelBandwidth$ = lărgimea de bandă a emiţătorului, în kHz;
 
-$modulationCurrent$ = schema de modulaţie folosită, în număr de simboluri
+$modulationCurrent$ = schema de modulaţie folosită, în număr de simboluri;
 
-$codeRateCurrent$ = procentul informaţiei utile din informaţia transmisă\\
+$codeRateCurrent$ = procentul informaţiei utile din informaţia transmisă;
+
+$symbRate$ = rata de simbol.
 
 Rata de transmisie a informaţiei utile, reprezintă produsul dintre rata de transmisie brută și procentul informaţiei utile din informaţia transmisă ($codeRateCurrent$), unde acesta reprezintă numărul de biţi ai informaţiei utile, raportat la numărul total de biţi transmişi. Acest procent apare din cauza redundanţei introduse pentru corectarea de erori și alte informații care nu fac parte din informaţia utilă și are o valoare tipică între 0,85 și 0,95~\cite{kizer2013digital}. În cazul \gls{wte}, s-a ales valoarea acestei rate curente a codului ca fiind 0,9.
 
