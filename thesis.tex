@@ -71,6 +71,12 @@
     \renewcommand{\figurename}{Fig.}
     \renewcommand{\tablename}{Tabelul}
     
+    \PrerenderUnicode{ș}
+    \PrerenderUnicode{ț}
+    \PrerenderUnicode{ă}
+    \PrerenderUnicode{î}
+    \PrerenderUnicode{â}
+    
     \hyphenation{par-ti-ci-pat}
     \hyphenation{ca-rac-te-ris-ti-ci-le}
     \hyphenation{ca-rac-te-ris-tici}
@@ -78,6 +84,49 @@
     \hyphenation{con-si-de-ra-te}
     \hyphenation{con-tex-tul}
     \hyphenation{mo-de-lul}
+    \hyphenation{se-pa-ra-rea}
+    \hyphenation{pro-pu-nea}
+    \hyphenation{cer-ce-ta-rea}
+    \hyphenation{ser-vi-ci-i-lor}
+    \hyphenation{teh-no-lo-gi-i-lor}
+    \hyphenation{si-ste-me-le}
+    \hyphenation{ge-ne-ra-le}
+    \hyphenation{mo-du-la-ri-za-rea}
+    \hyphenation{li-mi-tat}
+    \hyphenation{ac-ce-le-ra-rea}
+    \hyphenation{o-pe-ra-tori}
+    \hyphenation{re-cu-pe-ra-rea}
+    \hyphenation{u-ne-le}
+    \hyphenation{mo-de-le}
+    \hyphenation{si-mi-la-ra}
+    \hyphenation{e-xem-plu}
+    \hyphenation{dis-po-zi-ti-vu-lui}
+    \hyphenation{dis-po-zi-tiv}
+    \hyphenation{a-bi-li-ta-tea}
+    \hyphenation{si-mu-la-tor}
+    \hyphenation{des-cri-se}
+    \hyphenation{ge-ne-ra-te}
+    \hyphenation{res-pec-ti-va}
+    \hyphenation{fle-xi-bi-li-ta-te}
+    \hyphenation{con-fi-gu-ra-re}
+    \hyphenation{res-pec-tivi}
+    \hyphenation{se-pa-ra-rea}
+    \hyphenation{va-loa-rea}
+    \hyphenation{si-mu-la-to-ru-lui}
+    \hyphenation{va-lo-ri-le}
+    \hyphenation{ad-mi-nis-tra-te}
+    \hyphenation{a-nu-mi-te}
+    \hyphenation{e-xis-ta}
+    \hyphenation{si-mu-la-ta}
+    \hyphenation{con-se-cu-ti-ve}
+    \hyphenation{res-pec-ti-ve}
+    \hyphenation{tran-smi-si-e}
+    \hyphenation{mo-di-fi-ca-rea}
+    \hyphenation{mo-de-le}
+    \hyphenation{pu-te-rea}
+    \hyphenation{me-mo-ri-e}
+    \hyphenation{si-mu-la-to-rul}
+    \hyphenation{dis-po-zi-ti-ve}
 
 % The documentclass already sets parameters to make a high penalty for widows and orphans. 
 
@@ -108,15 +157,10 @@
 \usepackage{emptypage}
 \usepackage{lipsum}
 
-
 \usepackage[acronym,nomain,nonumberlist,nopostdot,nogroupskip]{glossaries}
 %\usepackage[nonumberlist,nopostdot,nogroupskip]{glossaries}
 \makeglossaries
-\PrerenderUnicode{ș}
-\PrerenderUnicode{ț}
-\PrerenderUnicode{ă}
-\PrerenderUnicode{î}
-\PrerenderUnicode{â}
+
 
 \newglossarystyle{symbunitlong}{%
 	\setglossarystyle{long3col}% base this style on the list style
@@ -321,6 +365,7 @@
   \phantomsection  % makes hyperref recognize this section properly for pdf link
 \else
 \fi
+
 \addcontentsline{toc}{chapter}{Bibliografie}
 
 % include your .bib file

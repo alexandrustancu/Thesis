@@ -57,8 +57,7 @@
 \newcommand*{\makefrontmatter}{
 \bodyspacing
 \frontmatter\maketitlepage\makecopyrightpage\makeabstract
-\cleardoublepage\makeacknowledgements\makededication\maketoc
-\makelot\clearpage\makelof\clearpage\makelos\clearpage\makeabbreviations
+\cleardoublepage\makeacknowledgements\makededication\maketoc\makelot\makelof\makelos\clearpage\makeabbreviations
 %\clearpage
 %\glsaddall
 %\printglossary[type=\acronymtype,title=Lista abrevierilor]
@@ -178,23 +177,26 @@
 	\clearpage
 }
 \DeclareOption{lot}{\renewcommand*{\makelot}{
-  \ifdefined\phantomsection
+  %\ifdefined\phantomsection
     % makes hyperref recognize this section properly for pdf links
-    \phantomsection
-  \else
-  \fi
-  \addcontentsline{toc}{section}{Lista tabelelor}
+  %  \phantomsection
+  %\else
+  %\fi
+  
   \renewcommand{\listtablename}{Lista tabelelor}
-  \listoftables}}
+  \listoftables
+  \addcontentsline{toc}{section}{Lista tabelelor}
+  \cleardoublepage\thispagestyle{empty}}}
 \DeclareOption{lof}{\renewcommand*{\makelof}{
-  \ifdefined\phantomsection
+  %\ifdefined\phantomsection
     % makes hyperref recognize this section properly for pdf links
-    \phantomsection
-  \else
-  \fi
-  \addcontentsline{toc}{section}{Lista figurilor}
+  %  \phantomsection
+  %\else
+  %\fi
   \renewcommand{\listfigurename}{Lista figurilor}
-  \listoffigures}}
+  \addcontentsline{toc}{section}{Lista figurilor}
+  \listoffigures
+  }}
 \DeclareOption{los}{
   \renewcommand*{\makelos}{
     \RequirePackage{losymbol}
